@@ -19,18 +19,18 @@ apply plugin: 'com.jfrog.bintray'
 
 ext {
     bintrayRepo = 'espresso-page-object'
-    bintrayName = 'espresso-page-object'
+    bintrayName = 'espressopageobject'
 
     publishedGroupId = 'com.atiurin.espresso'
     libraryName = 'EspressoPageObject'
-    artifact = 'espresso-page-object'
+    artifact = 'espressopageobject'
 
     libraryDescription = 'Library make it easy to write espresso test using page object pattern. It gives us other great benefits as well'
 
     siteUrl = 'https://github.com/alex-tiurin/espresso-page-object'
     gitUrl = 'https://github.com/alex-tiurin/espresso-page-object.git'
 
-    libraryVersion = '0.1'
+    libraryVersion = '0.1.1'
 
     developerId = 'alex-tiurin'
     developerName = 'Aleksei Tiurin'
@@ -48,7 +48,7 @@ ext.versions = [
         'buildTools'    : '28.0.3',
 
         'release'       : libraryVersion,
-        'code'          : 1,
+        'code'          : 2,
 ]
 
 android {
