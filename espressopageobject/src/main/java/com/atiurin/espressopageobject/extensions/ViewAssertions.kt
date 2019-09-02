@@ -1,71 +1,42 @@
 package com.atiurin.espressopageobject.extensions
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.isJavascriptEnabled
-import android.support.test.espresso.matcher.ViewMatchers.withText
+
 import android.view.View
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.afterAssertion
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.beforeAssertion
+import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.currentEspressoAssertion
+import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.viewAssertionProcessor
+import com.atiurin.espressopageobject.extensions.executors.AssertionExecutor
 import org.hamcrest.Matcher
 
-private fun assertView(viewMatcher: Matcher<View>, condition: Matcher<View>) {
+fun assertView(assertionExecutor: AssertionExecutor) {
+    currentEspressoAssertion = assertionExecutor.getEspressoAssertion()
     beforeAssertion()
-    onView(viewMatcher).check(matches(condition))
+    viewAssertionProcessor.assert(assertionExecutor)
     afterAssertion()
-}
-
-fun Matcher<View>.isDisplayed() = apply {
-    assertView(this, ViewMatchers.isDisplayed())
-}
-
-fun Matcher<View>.isCompletelyDisplayed() = apply {
-    assertView(this, ViewMatchers.isCompletelyDisplayed())
-}
-
-fun Matcher<View>.isDisplayingAtLeast(percentage: Int) = apply {
-    assertView(this, ViewMatchers.isDisplayingAtLeast(percentage))
-}
-
-fun Matcher<View>.isEnabled() = apply {
-    assertView(this, ViewMatchers.isEnabled())
-}
-
-fun Matcher<View>.isSelected() = apply {
-    assertView(this, ViewMatchers.isSelected())
-}
-
-fun Matcher<View>.isClickable() = apply {
-    assertView(this, ViewMatchers.isClickable())
-}
-
-fun Matcher<View>.isChecked() = apply {
-    assertView(this, ViewMatchers.isChecked())
-}
-
-fun Matcher<View>.isNotChecked() = apply {
-    assertView(this, ViewMatchers.isNotChecked())
-}
-
-fun Matcher<View>.isFocusable() = apply {
-    assertView(this, ViewMatchers.isFocusable())
-}
-
-fun Matcher<View>.isJavascriptEnabled() = apply {
-    assertView(this, ViewMatchers.isJavascriptEnabled())
-}
-
-fun Matcher<View>.hasText(text: String) = apply {
-    assertView(this, withText(text))
-}
-
-fun Matcher<View>.assertMatches(condition: Matcher<View>) = apply {
-    assertView(this, condition)
 }
 
 object ViewAssertionsConfig{
     var beforeAssertion= {}
     var afterAssertion= {}
+    var currentEspressoAssertion: EspressoAssertion? = null
+
+    //set your own implementation of ViewAssertionProcessor you would like to customise the behaviour
+    var viewAssertionProcessor = object : ViewAssertionProcessor{
+        override fun assert(assertionExecutor: AssertionExecutor) {
+            assertionExecutor.execute()
+        }
+    }
+
+    enum class AssertionType{
+        IS_DISPLAYED, IS_COMPLETELY_DISPLAYED, IS_DISPLAYING_AT_LEAST,
+        IS_ENABLED, IS_SELECTED, IS_CLICKABLE, IS_CHECKED, IS_NOT_CHECKED,
+        IS_FOCUSABLE, IS_JS_ENABLED, HAS_TEXT, ASSERT_MATCHES
+    }
 }
 
+open class EspressoAssertion(val type: ViewAssertionsConfig.AssertionType, val matcher: Matcher<View>)
+
+interface ViewAssertionProcessor {
+    fun assert(assertionExecutor: AssertionExecutor)
+}

@@ -1,10 +1,10 @@
 package com.atiurin.espressopageobject.recyclerview
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.ViewAction
-import android.support.test.espresso.contrib.RecyclerViewActions
-import android.support.v7.widget.RecyclerView
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.contrib.RecyclerViewActions
 import com.atiurin.espressopageobject.extensions.*
 import org.hamcrest.Matcher
 
@@ -40,7 +40,7 @@ open class RecyclerViewItem(
     fun swipeLeft() = apply { this.get().swipeLeft() }
     fun swipeRight() = apply { this.get().swipeRight() }
     fun swipeUp() = apply { this.get().swipeUp() }
-    fun execute(action: ViewAction) = apply { this.get().execute(action) }
+    fun execute(action: ViewAction) = apply { this.get().process(action) }
 
     //assertions
     fun isDisplayed() = apply { this.get().isDisplayed() }

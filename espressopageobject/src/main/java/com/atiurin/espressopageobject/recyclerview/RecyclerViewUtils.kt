@@ -1,9 +1,9 @@
 package com.atiurin.espressopageobject.recyclerview
 
-import android.support.test.espresso.util.HumanReadables
-import android.support.v7.widget.RecyclerView
 import android.util.SparseArray
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.util.HumanReadables
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
