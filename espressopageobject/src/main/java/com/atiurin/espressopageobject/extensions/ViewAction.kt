@@ -1,6 +1,8 @@
 package com.atiurin.espressopageobject.extensions
 
-import androidx.test.espresso.ViewAction
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.PerformException
+import com.atiurin.espressopageobject.extensions.entities.EspressoAction
 import com.atiurin.espressopageobject.extensions.executors.ActionExecutor
 
 fun actionOnView(actionExecutor: ActionExecutor) {
@@ -27,9 +29,12 @@ object ViewActionsConfig {
         TYPE_TEXT, REPLACE_TEXT, CLEAR_TEXT, PRESS_KEY, CLOSE_SOFT_KEYBOARD,
         SWIPE_LEFT, SWIPE_RIGHT, SWIPE_UP, SWIPE_DOWN, SCROLL, CUSTOM
     }
-}
 
-open class EspressoAction(val type: ViewActionsConfig.ActionType, val viewAction: ViewAction)
+    var ACTION_TIMEOUT = 5000L
+    var ASSERTION_TIMEOUT = 5000L
+
+    var allowedException = mutableListOf<Class<out Throwable>>(PerformException::class.java, NoMatchingViewException::class.java)
+}
 
 interface ViewActionProcessor {
     fun process(actionExecutor: ActionExecutor)

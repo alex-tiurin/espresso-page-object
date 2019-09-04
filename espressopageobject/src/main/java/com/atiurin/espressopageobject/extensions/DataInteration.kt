@@ -6,6 +6,7 @@ import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.action.EspressoKey
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import com.atiurin.espressopageobject.extensions.entities.EspressoAction
 import com.atiurin.espressopageobject.extensions.executors.DataInteractionActionExecutor
 import com.atiurin.espressopageobject.extensions.executors.DataInteractionAssertionExecutor
 import org.hamcrest.Matcher
@@ -137,7 +138,7 @@ fun DataInteraction.scrollTo() = apply {
     )
 }
 
-fun DataInteraction.process(viewAction: ViewAction) {
+fun DataInteraction.execute(viewAction: ViewAction) {
     actionOnView(
         DataInteractionActionExecutor(
             this,

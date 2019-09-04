@@ -18,18 +18,18 @@ import org.hamcrest.Matchers.allOf
 class ChatPage : Page {
     override fun assertPageDisplayed() = apply{
         step("Assert friends list page displayed") {
-            list.isDisplayed()
+            messagesList.isDisplayed()
         }
     }
 
-    private val list = withId(R.id.messages_list)
+    private val messagesList = withId(R.id.messages_list)
     val clearHistoryBtn = withText("Clear history")
     val inputMessageText = withId(R.id.message_input_text)
     val sendMessageBtn = withId(R.id.send_button)
 
     fun getListItem(text: String): ChatRecyclerItem {
         return ChatRecyclerItem(
-            list,
+            messagesList,
             ViewMatchers.hasDescendant(
                 Matchers.allOf(
                     withId(R.id.message_text),
@@ -51,7 +51,7 @@ class ChatPage : Page {
         step("Send message with text '$text") {
             inputMessageText.typeText(text)
             sendMessageBtn.click()
-            getListItem(text).text
+            this.getListItem(text).text
                 .isDisplayed()
                 .hasText(text)
         }

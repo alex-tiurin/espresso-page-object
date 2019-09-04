@@ -45,7 +45,6 @@ class AdvancedEspressoTest {
             ViewActionsConfig.afterAction = {
                 Log.d("Espresso", "made action")
             }
-
         }
     }
 
@@ -53,7 +52,7 @@ class AdvancedEspressoTest {
     fun registerResource() {
         AccountManager(getInstrumentation().targetContext).login(CURRENT_USER.login, CURRENT_USER.password)
         mActivityRule.launchActivity(Intent())
-        IdlingRegistry.getInstance().register(idlingRes,idlingRes2)
+//        IdlingRegistry.getInstance().register(idlingRes,idlingRes2)
 
     }
 
@@ -88,14 +87,13 @@ class AdvancedEspressoTest {
 
     @Test
     fun testRecyclerView(){
-        onView(withRecyclerView(withId(R.id.recycler_friends)).atItem(hasDescendant(withText("23123 123 12")))).
-            perform(click())
+        withRecyclerView(withId(R.id.recycler_friends)).atItem(hasDescendant(withText("TO FAIL TEST"))).isDisplayed()
         Thread.sleep(2000)
     }
 
     @After
     fun unregisterResource() {
-        IdlingRegistry.getInstance().unregister(idlingRes)
+//        IdlingRegistry.getInstance().unregister(idlingRes)
     }
 
 

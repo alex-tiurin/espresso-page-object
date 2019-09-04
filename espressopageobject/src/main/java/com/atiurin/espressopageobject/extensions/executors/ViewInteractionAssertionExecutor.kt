@@ -3,11 +3,28 @@ package com.atiurin.espressopageobject.extensions.executors
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import com.atiurin.espressopageobject.extensions.EspressoAssertion
+import com.atiurin.espressopageobject.extensions.ViewActionsConfig
 
 class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val assertion: EspressoAssertion):
     AssertionExecutor {
-    override fun execute(): AssertionExecutor = apply{
-        viewInteraction.check(matches(assertion.matcher))
+    override fun execute(){
+        val result = booleanArrayOf(true)
+        var exception: Throwable? = null
+        val startTime = System.currentTimeMillis()
+        val endTime = startTime + ViewActionsConfig.ACTION_TIMEOUT
+        do {
+            result[0] = true
+            viewInteraction.withFailureHandler { error, viewMatcher ->
+                if (error::class.java in ViewActionsConfig.allowedException){
+                    result[0] = false
+                    exception = error
+                } else throw error
+            }.check(matches(assertion.matcher))
+            Thread.sleep(50)
+        } while (System.currentTimeMillis() < endTime && !result[0])
+        if (!result[0] && exception != null){
+            throw exception as Throwable
+        }
     }
 
     override fun getEspressoAssertion(): EspressoAssertion {

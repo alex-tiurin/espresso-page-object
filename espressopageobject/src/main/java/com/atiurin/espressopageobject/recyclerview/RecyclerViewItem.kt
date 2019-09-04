@@ -2,7 +2,6 @@ package com.atiurin.espressopageobject.recyclerview
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.contrib.RecyclerViewActions
 import com.atiurin.espressopageobject.extensions.*
@@ -21,8 +20,8 @@ open class RecyclerViewItem(
 
     //TODO work around this trade off
     fun scrollToItem() : RecyclerViewItem = apply {
-        onView(recyclerViewMatcher)
-            .perform(RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(itemViewMatcher))
+        recyclerViewMatcher.execute(
+            RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(itemViewMatcher))
     }
 
     private fun get() : Matcher<View> {
@@ -40,7 +39,7 @@ open class RecyclerViewItem(
     fun swipeLeft() = apply { this.get().swipeLeft() }
     fun swipeRight() = apply { this.get().swipeRight() }
     fun swipeUp() = apply { this.get().swipeUp() }
-    fun execute(action: ViewAction) = apply { this.get().process(action) }
+    fun execute(action: ViewAction) = apply { this.get().execute(action) }
 
     //assertions
     fun isDisplayed() = apply { this.get().isDisplayed() }

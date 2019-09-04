@@ -63,8 +63,8 @@ fun Matcher<View>.scrollTo() = apply {
     onView(this).scrollTo()
 }
 
-fun Matcher<View>.process(viewAction: ViewAction) {
-    onView(this).process(viewAction)
+fun Matcher<View>.execute(viewAction: ViewAction) {
+    onView(this).execute(viewAction)
 }
 //assertions
 
