@@ -25,13 +25,8 @@ class FriendsListPage : Page {
 
     fun getListItem(title: String): FriendRecyclerItem {
         return FriendRecyclerItem(
-            friendsList,
-            hasDescendant(
-                allOf(
-                    withId(R.id.tv_name),
-                    withText(title)
-                )
-            )
+            withId(R.id.recycler_friends),
+            hasDescendant(allOf(withId(R.id.tv_name),withText(title)))
         )
     }
 
