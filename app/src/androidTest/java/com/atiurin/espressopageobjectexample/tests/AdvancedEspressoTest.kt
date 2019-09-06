@@ -2,14 +2,6 @@ package com.atiurin.espressopageobjectexample.tests
 
 import android.content.Intent
 import android.util.Log
-import android.view.View
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
-import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
@@ -23,8 +15,6 @@ import com.atiurin.espressopageobjectexample.idlingresources.resources.ChatIdlin
 import com.atiurin.espressopageobjectexample.managers.AccountManager
 import com.atiurin.espressopageobjectexample.pages.ChatPage
 import com.atiurin.espressopageobjectexample.pages.FriendsListPage
-import org.hamcrest.Matcher
-import org.hamcrest.Matchers.allOf
 import org.junit.*
 
 class AdvancedEspressoTest {
@@ -74,7 +64,7 @@ class AdvancedEspressoTest {
         val messageText = "message3"
         FriendsListPage().getListItem("Janice").click()
         val chatPage = ChatPage()
-        chatPage.getName("Janice").isDisplayed()
+        chatPage.getTitle("Janice").isDisplayed()
         chatPage.openOptionsMenu()
         chatPage.clearHistoryBtn.click()
         chatPage.inputMessageText.typeText(messageText)

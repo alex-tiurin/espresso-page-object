@@ -39,8 +39,8 @@ class ChatPage : Page {
         )
     }
 
-    fun getName(name: String): Matcher<View> {
-        return allOf(withId(R.id.toolbar_title), withText(name))
+    fun getTitle(title: String): Matcher<View> {
+        return allOf(withId(R.id.toolbar_title), withText(title))
     }
 
     class ChatRecyclerItem(list: Matcher<View>, item: Matcher<View>) : RecyclerViewItem(list, item) {

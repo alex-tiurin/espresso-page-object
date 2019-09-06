@@ -12,7 +12,7 @@ val CONTACTS =  arrayListOf(
     Contact(3, "Ross Geller","UNAGI", Avatars.ROSS.drawable),
     Contact(4, "Rachel Green", "I got off the plane!",Avatars.RACHEL.drawable),
     Contact(5, "Phoebe Buffay", "Smelly cat, smelly cat..",Avatars.PHOEBE.drawable),
-    Contact(6, "Monica Geller", "UNAGI",Avatars.MONICA.drawable),
+    Contact(6, "Monica Geller", "I need to clean up..",Avatars.MONICA.drawable),
     Contact(7, "Gunther", "They were on break :(",Avatars.GUNTHER.drawable),
     Contact(8, "Janice","Oh. My. God", Avatars.JANICE.drawable)
 )

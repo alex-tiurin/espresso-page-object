@@ -1,4 +1,10 @@
 # Espresso page object
+
+Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
+Вам не нужно запоминать новые классы, изучать новый синтаксис. Все действия у вас появляются из коробки.
+Для продвинутых пользователей библиотека предоставляет хорошую возможность в кастомизации и расширении возможностей DSL.
+Стабильных Вам тестов!
+
 ## Подключение к проекту
 Gradle
 ```groovy
@@ -36,12 +42,12 @@ class ChatPage {
     private val sendMessageBtn = withId(R.id.send_button)
 }
 ```
-Некоторые элементы, такие как item списков, могут вычисляться динамически, в зависимости от данных приложения.
+Некоторые элементы, такие как заголовки открытого чата, могут вычисляться динамически, в зависимости от данных приложения.
 Тогда для их определния в класс PageObject необходимо добавить метод, возвращающий объект Matcher<View>
 ```kotlin
 class ChatPage {
-    private fun getName(name: String): Matcher<View> {
-        return allOf(withId(R.id.toolbar_title), withText(name))
+    private fun getTitle(title: String): Matcher<View> {
+        return allOf(withId(R.id.toolbar_title), withText(title))
     }
 }
 ```
@@ -66,7 +72,7 @@ class ChatPage {
 ```
 См. полный код [ChatPage.class](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/pages/ChatPage.kt)
 
-3. Добаь действия пользователя в тест
+3. Добавьте действия пользователя в тест
 
 ```kotlin
     @Test
