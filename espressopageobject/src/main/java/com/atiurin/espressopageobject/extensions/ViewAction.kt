@@ -31,7 +31,6 @@ object ViewActionsConfig {
     }
 
     var ACTION_TIMEOUT = 5000L
-    var ASSERTION_TIMEOUT = 5000L
 
     var allowedException = mutableListOf<Class<out Throwable>>(PerformException::class.java, NoMatchingViewException::class.java)
 }

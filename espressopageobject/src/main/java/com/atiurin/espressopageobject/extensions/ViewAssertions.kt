@@ -33,6 +33,8 @@ object ViewAssertionsConfig{
         IS_ENABLED, IS_SELECTED, IS_CLICKABLE, IS_CHECKED, IS_NOT_CHECKED,
         IS_FOCUSABLE, IS_JS_ENABLED, HAS_TEXT, ASSERT_MATCHES
     }
+
+    var ASSERTION_TIMEOUT = 5000L
 }
 
 open class EspressoAssertion(val type: ViewAssertionsConfig.AssertionType, val matcher: Matcher<View>)

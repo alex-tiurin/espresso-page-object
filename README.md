@@ -29,7 +29,7 @@ Maven
 1. Создайте PageObject class и определите Matcher<View> UI элементов экрана в нем
 
 ```kotlin
-class ChatPage : Page {
+class ChatPage {
     private val messagesList = withId(R.id.messages_list)
     private val clearHistoryBtn = withText("Clear history")
     private val inputMessageText = withId(R.id.message_input_text)
@@ -39,7 +39,7 @@ class ChatPage : Page {
 Некоторые элементы, такие как item списков, могут вычисляться динамически, в зависимости от данных приложения.
 Тогда для их определния в класс PageObject необходимо добавить метод, возвращающий объект Matcher<View>
 ```kotlin
-class ChatPage : Page {
+class ChatPage {
     private fun getName(name: String): Matcher<View> {
         return allOf(withId(R.id.toolbar_title), withText(name))
     }
@@ -49,7 +49,7 @@ class ChatPage : Page {
 2. Добавьте методы действий пользоватя в класс PageObject
 
 ```kotlin
-class ChatPage : Page {
+class ChatPage {
     fun sendMessage(text: String) = apply {
         inputMessageText.typeText(text)
         sendMessageBtn.click()
@@ -84,3 +84,39 @@ class ChatPage : Page {
 ```
 
 См. полный код с примером теста [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+
+## Особенности
+
+### onData(Matcher<View>)
+Если нужно работать с AdapterView и использовать onData(Matcher<View>)
+```kotlin
+
+class SomePage{
+    val adapterElement = onData(withText(R.id.textId))
+}
+```
+Все функции click(), longClick(), isDisplayed() и т.д. будут доступны
+
+### Все действия выполняются через failureHandler
+
+Как это работает? В течении заданного тайм-аута (по умолчанию 5 секунд), при выполнении действия будут перехватываться 2 exception%
+- PerformException
+- NoMatchingViewException
+
+Действие будет повторяться каждые 50мс, пока не выполниться или не достигнет тайм-аут. 
+
+Такой подход позволяет снизить flakiness ваших тестов и поднять их стабильность.
+
+Вы можете отключить подобное поведение добавив перед тестом строку
+```kotlin
+ViewActionsConfig.allowedException.clear()
+```
+Можете расширить список обрабатываемых исключений:
+```kotlin
+ViewActionsConfig.allowedException.add(AmbiguousViewMatcherException::class.java)
+```
+Можете поменять время тайм-аута действия:
+```kotlin
+ViewActionsConfig.ACTION_TIMEOUT = 10000L
+ViewAssertionsConfig.ASSERTION_TIMEOUT = 10000L
+```
