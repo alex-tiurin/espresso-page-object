@@ -4,6 +4,7 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import com.atiurin.espressopageobject.extensions.EspressoAssertion
 import com.atiurin.espressopageobject.extensions.ViewActionsConfig
+import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig
 
 class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val assertion: EspressoAssertion):
     AssertionExecutor {
@@ -15,7 +16,7 @@ class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val
         do {
             result[0] = true
             viewInteraction.withFailureHandler { error, viewMatcher ->
-                if (error::class.java in ViewActionsConfig.allowedException){
+                if (error::class.java in ViewAssertionsConfig.allowedExceptions){
                     result[0] = false
                     exception = error
                 } else throw error

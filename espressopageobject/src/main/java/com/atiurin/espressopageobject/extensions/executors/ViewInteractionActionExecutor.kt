@@ -1,6 +1,5 @@
 package com.atiurin.espressopageobject.extensions.executors
 
-import android.util.Log
 import androidx.test.espresso.ViewInteraction
 import com.atiurin.espressopageobject.extensions.ViewActionsConfig
 import com.atiurin.espressopageobject.extensions.entities.EspressoAction
@@ -16,7 +15,7 @@ class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val ac
         do {
             result[0] = true
             viewInteraction.withFailureHandler { error, viewMatcher ->
-                if (error::class.java in ViewActionsConfig.allowedException){
+                if (error::class.java in ViewActionsConfig.allowedExceptions){
                     result[0] = false
                     exception = error
                 } else throw error

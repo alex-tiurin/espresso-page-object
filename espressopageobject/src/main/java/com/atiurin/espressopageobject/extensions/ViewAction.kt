@@ -32,7 +32,7 @@ object ViewActionsConfig {
 
     var ACTION_TIMEOUT = 5000L
 
-    var allowedException = mutableListOf<Class<out Throwable>>(PerformException::class.java, NoMatchingViewException::class.java)
+    var allowedExceptions = mutableListOf<Class<out Throwable>>(PerformException::class.java, NoMatchingViewException::class.java)
 }
 
 interface ViewActionProcessor {

@@ -166,13 +166,15 @@ class SomePage{
 
 Такой подход позволяет снизить flakiness ваших тестов и поднять их стабильность.
 
-Вы можете отключить подобное поведение добавив перед тестом строку
+Вы можете отключить подобное поведение добавив перед тестом строки
 ```kotlin
-ViewActionsConfig.allowedException.clear()
+ViewActionsConfig.allowedExceptions.clear()     
+ViewAssertionsConfig.allowedExceptions.clear() 
 ```
 Можете расширить список обрабатываемых исключений:
 ```kotlin
-ViewActionsConfig.allowedException.add(AmbiguousViewMatcherException::class.java)
+ViewActionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
+ViewAssertionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
 ```
 Можете поменять время тайм-аута действия:
 ```kotlin

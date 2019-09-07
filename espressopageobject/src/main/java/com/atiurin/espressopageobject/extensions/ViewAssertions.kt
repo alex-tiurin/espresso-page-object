@@ -2,6 +2,8 @@ package com.atiurin.espressopageobject.extensions
 
 
 import android.view.View
+import androidx.test.espresso.NoMatchingViewException
+import androidx.test.espresso.PerformException
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.afterAssertion
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.beforeAssertion
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig.currentEspressoAssertion
@@ -34,6 +36,7 @@ object ViewAssertionsConfig{
         IS_FOCUSABLE, IS_JS_ENABLED, HAS_TEXT, ASSERT_MATCHES
     }
 
+    var allowedExceptions = mutableListOf<Class<out Throwable>>(PerformException::class.java, NoMatchingViewException::class.java)
     var ASSERTION_TIMEOUT = 5000L
 }
 
