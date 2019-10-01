@@ -1,6 +1,7 @@
 package com.atiurin.espressopageobject.extensions
 
 import android.view.View
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.EspressoKey
@@ -10,6 +11,7 @@ import com.atiurin.espressopageobject.extensions.entities.EspressoAction
 import com.atiurin.espressopageobject.extensions.executors.ViewInteractionActionExecutor
 import com.atiurin.espressopageobject.extensions.executors.ViewInteractionAssertionExecutor
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.not
 
 
 fun ViewInteraction.click() = apply {
@@ -153,6 +155,15 @@ fun ViewInteraction.isDisplayed() = apply {
         ViewInteractionAssertionExecutor(
             this,
             EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_DISPLAYED, ViewMatchers.isDisplayed())
+        )
+    )
+}
+
+fun ViewInteraction.isNotDisplayed() = apply {
+    assertView(
+        ViewInteractionAssertionExecutor(
+            this,
+            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_DISPLAYED, not(ViewMatchers.isDisplayed()))
         )
     )
 }

@@ -20,7 +20,7 @@ class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val ac
                     exception = error
                 } else throw error
             }.perform(action.viewAction)
-            Thread.sleep(50)
+            if (!result[0]) Thread.sleep(50)
         } while (System.currentTimeMillis() < endTime && !result[0])
         if (!result[0] && exception != null){
             throw exception as Throwable

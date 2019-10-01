@@ -19,35 +19,33 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class DemoEspressoTest{
+class DemoEspressoTest : BaseTest() {
 
-    private val idlingRes = ContactsIdlingResource.getInstanceFromTest()
-    @Rule
-    @JvmField
-    val mActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
-
-    @Before
-    fun registerResource() {
-        AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(CURRENT_USER.login, CURRENT_USER.password)
-        mActivityRule.launchActivity(Intent())
-        IdlingRegistry.getInstance().register(idlingRes)
-    }
 
     @Test
-    fun friendsItemCheck(){
+    fun friendsItemCheck() {
         FriendsListPage()
             .assertName("Janice")
-            .assertStatus("Janice","Oh. My. God")
+            .assertStatus("Janice", "Oh. My. God")
     }
+
     @Test
-    fun sendMessage(){
+    fun sendMessage() {
         FriendsListPage().openChat("Janice")
         ChatPage().clearHistory()
             .sendMessage("test message")
     }
 
-    @After
-    fun unregisterResource() {
-        IdlingRegistry.getInstance().unregister(idlingRes)
+    @Test
+    fun checkMessagesPositionsInChat() {
+        val firstMessage = "first message"
+        val secondMessage = "second message"
+        FriendsListPage().openChat("Janice")
+        ChatPage().clearHistory()
+            .sendMessage(firstMessage)
+            .sendMessage(secondMessage)
+            .assertMessageTextAtPosition(0, firstMessage)
+            .assertMessageTextAtPosition(1, secondMessage)
+
     }
 }

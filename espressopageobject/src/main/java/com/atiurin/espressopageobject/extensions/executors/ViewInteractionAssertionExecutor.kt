@@ -6,7 +6,7 @@ import com.atiurin.espressopageobject.extensions.EspressoAssertion
 import com.atiurin.espressopageobject.extensions.ViewActionsConfig
 import com.atiurin.espressopageobject.extensions.ViewAssertionsConfig
 
-class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val assertion: EspressoAssertion):
+open class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val assertion: EspressoAssertion):
     AssertionExecutor {
     override fun execute(){
         val result = booleanArrayOf(true)
@@ -21,7 +21,7 @@ class ViewInteractionAssertionExecutor(val viewInteraction: ViewInteraction, val
                     exception = error
                 } else throw error
             }.check(matches(assertion.matcher))
-            Thread.sleep(50)
+            if (!result[0]) Thread.sleep(50)
         } while (System.currentTimeMillis() < endTime && !result[0])
         if (!result[0] && exception != null){
             throw exception as Throwable

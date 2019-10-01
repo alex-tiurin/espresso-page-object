@@ -73,6 +73,10 @@ fun Matcher<View>.isDisplayed() = apply {
     onView(this).isDisplayed()
 }
 
+fun Matcher<View>.isNotDisplayed() = apply {
+    onView(this).isNotDisplayed()
+}
+
 fun Matcher<View>.isCompletelyDisplayed() = apply {
     onView(this).isCompletelyDisplayed()
 }

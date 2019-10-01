@@ -16,13 +16,13 @@ import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
 
 class ChatPage : Page {
-    override fun assertPageDisplayed() = apply{
+    override fun assertPageDisplayed() = apply {
         step("Assert friends list page displayed") {
             messagesList.isDisplayed()
         }
     }
 
-    private val messagesList = withId(R.id.messages_list)
+    val messagesList = withId(R.id.messages_list)
     val clearHistoryBtn = withText("Clear history")
     val inputMessageText = withId(R.id.message_input_text)
     val sendMessageBtn = withId(R.id.send_button)
@@ -31,7 +31,7 @@ class ChatPage : Page {
         return ChatRecyclerItem(
             messagesList,
             ViewMatchers.hasDescendant(
-                Matchers.allOf(
+                allOf(
                     withId(R.id.message_text),
                     withText(text)
                 )
@@ -39,11 +39,18 @@ class ChatPage : Page {
         )
     }
 
+    fun getListItemAtPosition(position: Int): ChatRecyclerItem {
+        return ChatRecyclerItem(messagesList, position)
+    }
+
     fun getTitle(title: String): Matcher<View> {
         return allOf(withId(R.id.toolbar_title), withText(title))
     }
 
-    class ChatRecyclerItem(list: Matcher<View>, item: Matcher<View>) : RecyclerViewItem(list, item) {
+    class ChatRecyclerItem : RecyclerViewItem {
+        constructor(list: Matcher<View>, item: Matcher<View>) : super(list, item)
+        constructor(list: Matcher<View>, position: Int) : super(list, position)
+
         val text = getChildMatcher(withId(R.id.message_text))
     }
 
@@ -55,6 +62,10 @@ class ChatPage : Page {
                 .isDisplayed()
                 .hasText(text)
         }
+    }
+
+    fun assertMessageTextAtPosition(position: Int, text: String) = apply {
+        this.getListItemAtPosition(position).text.isDisplayed().hasText(text)
     }
 
     fun clearHistory() = apply {
