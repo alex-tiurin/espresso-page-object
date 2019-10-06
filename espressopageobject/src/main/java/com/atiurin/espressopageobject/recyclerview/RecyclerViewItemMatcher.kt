@@ -133,8 +133,6 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
     }
 
     private fun findItemView(itemMatcher: Matcher<View>, rootView: View?): View? {
-        Counter.value++
-        Log.w("EspressoTest", "Counter = ${Counter.value}")
         for (childView in TreeIterables.breadthFirstViewTraversal(rootView)) {
             if (recyclerViewMatcher.matches(childView)) {
                 val recyclerView = childView as RecyclerView
@@ -152,8 +150,6 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
     }
 
     private fun findItemViewAtPosition(position: Int, rootView: View?): View? {
-        Counter.value++
-        Log.w("EspressoTest", "Counter = ${Counter.value}")
         for (childView in TreeIterables.breadthFirstViewTraversal(rootView)) {
             if (recyclerViewMatcher.matches(childView)) {
                 val recyclerView = childView as RecyclerView
@@ -163,8 +159,4 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
         }
         return null
     }
-}
-
-object Counter {
-    var value = 0
 }
