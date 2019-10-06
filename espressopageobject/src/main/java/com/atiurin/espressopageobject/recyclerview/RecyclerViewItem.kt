@@ -8,67 +8,36 @@ import com.atiurin.espressopageobject.extensions.*
 import org.hamcrest.Matcher
 
 open class RecyclerViewItem {
-    private var recyclerViewMatcher: Matcher<View>
-    private var autoScroll: Boolean = true
-    private var itemViewMatcher: Matcher<View>? = null
-    private var position: Int = -1
+    var executor: RecyclerViewItemExecutor
 
     constructor(
         recyclerViewMatcher: Matcher<View>,
         itemViewMatcher: Matcher<View>,
         autoScroll: Boolean = true
     ) {
-        this.recyclerViewMatcher = recyclerViewMatcher
-        this.itemViewMatcher = itemViewMatcher
-        this.autoScroll = autoScroll
+        executor = RecyclerViewItemMatchingExecutor(recyclerViewMatcher, itemViewMatcher)
         if (autoScroll) {
             scrollToItem()
         }
     }
 
     constructor(recyclerViewMatcher: Matcher<View>, position: Int, autoScroll: Boolean = true) {
-        if (position < 0) throw Exception("Position param value can't be negative!")
-        this.recyclerViewMatcher = recyclerViewMatcher
-        this.position = position
-        this.autoScroll = autoScroll
+        executor = RecyclerViewItemPositionalExecutor(recyclerViewMatcher, position)
         if (autoScroll) {
             scrollToItem()
         }
     }
 
-    //TODO work around this trade off
     fun scrollToItem(): RecyclerViewItem = apply {
-        if (position < 0) {
-            if (itemViewMatcher == null) {
-                throw Exception("You need to specify itemMatcher param!")
-            }
-            recyclerViewMatcher.execute(
-                RecyclerViewActions.scrollTo<RecyclerView.ViewHolder>(itemViewMatcher)
-            )
-        } else {
-            recyclerViewMatcher.execute(
-                RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(position)
-            )
-        }
-
+        executor.scrollToItem()
     }
 
     private fun get(): Matcher<View> {
-        return if (position < 0) {
-            if (itemViewMatcher == null) {
-                throw Exception("You need to specify itemMatcher param!")
-            }
-            withRecyclerView(recyclerViewMatcher).atItem(itemViewMatcher!!)
-        } else withRecyclerView(recyclerViewMatcher).atPosition(position)
+        return executor.getItemMatcher()
     }
 
     fun getChildMatcher(childMatcher: Matcher<View>): Matcher<View> {
-        return if (position < 0) {
-            if (itemViewMatcher == null) {
-                throw Exception("You need to specify itemMatcher param!")
-            }
-            withRecyclerView(recyclerViewMatcher).atItemChild(itemViewMatcher!!, childMatcher)
-        } else withRecyclerView(recyclerViewMatcher).atPositionItemChild(position, childMatcher)
+        return executor.getItemChildMatcher(childMatcher)
     }
 
     //actions
@@ -83,7 +52,6 @@ open class RecyclerViewItem {
 
     //assertions
     fun isDisplayed() = apply { this.get().isDisplayed() }
-
     fun isCompletelyDisplayed() = apply { this.get().isCompletelyDisplayed() }
     fun isDisplayingAtLeast(percentage: Int) = apply { this.get().isDisplayingAtLeast(percentage) }
     fun isClickable() = apply { this.get().isClickable() }

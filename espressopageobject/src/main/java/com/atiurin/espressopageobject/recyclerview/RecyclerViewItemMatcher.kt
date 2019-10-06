@@ -27,7 +27,6 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
             }
 
             override fun matchesSafely(view: View?): Boolean {
-
                 if (itemView == null) itemView = findItemView(itemMatcher, view?.rootView)
                 return if (itemView != null) {
                     itemView == view

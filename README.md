@@ -1,11 +1,12 @@
 # Espresso page object
 
-Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
-Вам не нужно запоминать новые классы, изучать новый синтаксис. Все действия у вас появляются из коробки.
-Для продвинутых пользователей библиотека предоставляет хорошую возможность в кастомизации и расширении возможностей DSL.
-Стабильных Вам тестов!
+This library provides access to nice and simple DSL for Espresso framework.
+You don't need to learn any new classes or special syntax. All magic actions and assertions are provided from crunch.
+Library can be easy customised and extended by advanced user. Wish you only stable tests!
 
-## Подключение к проекту
+## Russian README is [here](https://github.com/alex-tiurin/espresso-page-object/blob/master/README_RU.md)
+
+## Add ot you project
 Gradle
 ```groovy
 repositories {
@@ -28,11 +29,11 @@ Maven
 
 ## AndroidX
 
-Необходимо, чтобы ваш проект использовал AndroidX библиотеки. С android support могут возникнуть проблемы.
+It is required to use AndroidX libraries. You can get some problems with Android Support ones.
 
-## 3 шага для написания теста с использованием espresso-page-object
+## 3 steps to write a test using espresso-page-object
 
-1. Создайте PageObject class и определите Matcher<View> UI элементов экрана в нем
+1. Create a PageObject class and specify screen UI elements `Matcher<View>`
 
 ```kotlin
 class ChatPage {
@@ -42,8 +43,9 @@ class ChatPage {
     private val sendMessageBtn = withId(R.id.send_button)
 }
 ```
-Некоторые элементы, такие как заголовки открытого чата, могут вычисляться динамически, в зависимости от данных приложения.
-Тогда для их определния в класс PageObject необходимо добавить метод, возвращающий объект Matcher<View>
+Some elements like chat title could be determined dynamically with application data.
+In this case you need to add a method in PageObject class which will return `Matcher<View>` object.
+
 ```kotlin
 class ChatPage {
     private fun getTitle(title: String): Matcher<View> {
@@ -52,7 +54,7 @@ class ChatPage {
 }
 ```
 
-2. Добавьте методы действий пользоватя в класс PageObject
+2. Describe user step methods in PageObject class.
 
 ```kotlin
 class ChatPage {
@@ -70,9 +72,9 @@ class ChatPage {
     }
 }
 ```
-См. полный код [ChatPage.class](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/pages/ChatPage.kt)
+Full code sample [ChatPage.class](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/pages/ChatPage.kt)
 
-3. Добавьте действия пользователя в тест
+3. Call user steps in test
 
 ```kotlin
     @Test
@@ -89,17 +91,17 @@ class ChatPage {
     }
 ```
 
-См. полный код с примером теста [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+Full code sample [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
 
-## Работа с RecyclerView
-Прежде чем начать, определимся с понятиями:
-- RecyclerView - список элементов (есть стандартный класс RecyclerView в Android фреймворке)
-- RecyclerViewItem - один из элементов списка (есть класс RecyclerViewItem в библиотеке espresso-page-object)
-- RecyclerItemChild - дочерний элемент внутри элемента списка (просто понятие, отдельного класса для работы с дочерними элементами нет)
+## Interaction with RecyclerView
+Before we go forward we need to define some terms:
+- RecyclerView - list of some items (a standard Android framework class)
+- RecyclerViewItem - single item of RecyclerView list (there is a class RecyclerViewItem in espresso-page-object lib)
+- RecyclerItemChild - child element of RecyclerViewItem (just a term, there is no special class to work with child elements)
 
 ![RecyclerViewItem](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/img/recyclerViewItem.png)
 
-Если необходимо работать только с элементами списка и нет нужды работать и проверять его дочерние элементы, то создаем метод, который возвращает экземпляр класса RecyclerView
+In case you don't need to work with RecyclerItemChild you just need to create a method that returns RecyclerViewItem instance.
 
 ```kotlin
 fun getListItem(text: String): RecyclerViewItem {
@@ -115,18 +117,20 @@ fun someUserAction(): SomePage = apply{
 }
 ```
 
-Если необходимо работать с дочерними элементами списка, то создаем наследника RecyclerViewItem и описываем дочерние элементы:
+In case you need to make some actions or assertions on RecyclerItemChild you need to do the following:
+- create a RecyclerViewItem subclass and describe a property of this subclass that represents a RecyclerItemChild,
+- create a method that returns RecyclerViewItem subclass instance.
 
 ```kotlin
 class FriendsListPage : Page {
-    val friendsList = withId(R.id.recycler_friends)
+    private val friendsList = withId(R.id.recycler_friends)
 
     class FriendRecyclerItem(list: Matcher<View>, item: Matcher<View>) : RecyclerViewItem(list, item) {
         val name = getChildMatcher(withId(R.id.tv_name))
         val status = getChildMatcher(withId(R.id.tv_status))
     }
 
-    fun getListItem(title: String): FriendRecyclerItem {
+    private fun getListItem(title: String): FriendRecyclerItem {
         return FriendRecyclerItem(
             withId(R.id.recycler_friends),
             hasDescendant(allOf(withId(R.id.tv_name),withText(title)))
@@ -140,43 +144,77 @@ class FriendsListPage : Page {
     }
 }
 ```
-Обратите внимание, что дочерние элементы item создаются с использованием метода **getChildMatcher**
+Note that RecyclerItemChild element is created by `getChildMatcher` method of RecyclerViewItem.class
+
 ```kotlin
 val name = getChildMatcher(withId(R.id.tv_name))
 ```
-## Особенности
 
-### onData(Matcher<View>)
-Если нужно работать с AdapterView и использовать onData(Matcher<View>)
+### Positionable RecyclerViewItem 
+
+Sometimes you need to get RecyclerViewItem by it's position in RecyclerView list. For example, you need to take a first item in a list.
+
+In this case you need to use another constructor of RecyclerViewItem.class
+
+```kotlin
+class ChatPage : Page {
+    private val messagesList = withId(R.id.messages_list)
+    
+    class ChatRecyclerItem : RecyclerViewItem {
+        constructor(list: Matcher<View>, item: Matcher<View>) : super(list, item)
+        constructor(list: Matcher<View>, position: Int) : super(list, position)
+
+        val text = getChildMatcher(withId(R.id.message_text))
+    }
+    
+    private fun getListItemAtPosition(position: Int): ChatRecyclerItem {
+        return ChatRecyclerItem(messagesList, position)
+    }
+    
+    fun assertMessageTextAtPosition(position: Int, text: String) = apply {
+        this.getListItemAtPosition(position).text.isDisplayed().hasText(text)
+    }
+}
+```
+
+## Features
+
+### `onData(Matcher<View>)`
+
+In case you need to interact with AdapterView and use standard Espresso `onData(Matcher<View>)` method
+
 ```kotlin
 
 class SomePage{
     val adapterElement = onData(withText(R.id.textId))
 }
 ```
-Все функции click(), longClick(), isDisplayed() и т.д. будут доступны
 
-### Все действия выполняются через failureHandler
+All actions and assertions like click(), longClick(), isDisplayed() and so on will be allowed for `adapterElement`
 
-Как это работает? В течении заданного тайм-аута (по умолчанию 5 секунд), при выполнении действия будут перехватываться 2 exception%
+### All actions and assertions are executed with failureHandler
+
+How does it work? Two exceptions will be caught during timeout (by default 5 seconds) 
 - PerformException
 - NoMatchingViewException
 
-Действие будет повторяться каждые 50мс, пока не выполниться или не достигнет тайм-аут. 
+Action/assertion will be repeated every 50ms while it won't be successfully executed or timeout will be reached.
 
-Такой подход позволяет снизить flakiness ваших тестов и поднять их стабильность.
+This approach allows us to reduce test flakiness.
 
-Вы можете отключить подобное поведение добавив перед тестом строки
+It is possible to turn off this logic by adding next lines before test:
+
 ```kotlin
 ViewActionsConfig.allowedExceptions.clear()     
 ViewAssertionsConfig.allowedExceptions.clear() 
 ```
-Можете расширить список обрабатываемых исключений:
+
+You can extend the list of caught exceptions:
 ```kotlin
 ViewActionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
 ViewAssertionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
 ```
-Можете поменять время тайм-аута действия:
+You can change the timeout value for actions and assertions:
 ```kotlin
 ViewActionsConfig.ACTION_TIMEOUT = 10000L
 ViewAssertionsConfig.ASSERTION_TIMEOUT = 10000L

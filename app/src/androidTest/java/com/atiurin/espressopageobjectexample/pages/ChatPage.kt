@@ -39,7 +39,7 @@ class ChatPage : Page {
         )
     }
 
-    fun getListItemAtPosition(position: Int): ChatRecyclerItem {
+    private fun getListItemAtPosition(position: Int): ChatRecyclerItem {
         return ChatRecyclerItem(messagesList, position)
     }
 

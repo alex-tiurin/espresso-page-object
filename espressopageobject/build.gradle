@@ -29,7 +29,7 @@ ext {
     siteUrl = 'https://github.com/alex-tiurin/espresso-page-object'
     gitUrl = 'https://github.com/alex-tiurin/espresso-page-object.git'
 
-    libraryVersion = '0.1.5'
+    libraryVersion = '0.1.6'
 
     developerId = 'alex-tiurin'
     developerName = 'Aleksei Tiurin'
@@ -47,7 +47,7 @@ ext.versions = [
         'buildTools'    : '28.0.3',
 
         'release'       : libraryVersion,
-        'code'          : 6,
+        'code'          : 7,
 ]
 
 android {
