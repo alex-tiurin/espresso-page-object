@@ -58,10 +58,12 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
             override fun matchesSafely(view: View?): Boolean {
                 if (itemView == null) itemView = findItemView(itemMatcher, view?.rootView)
                 if (itemView != null) {
-                    for (childView in TreeIterables.breadthFirstViewTraversal(itemView)) {
-                        if (childMatcher.matches(childView)) {
-                            this.childView = childView
-                            break
+                    if (childView == null) {
+                        for (childView in TreeIterables.breadthFirstViewTraversal(itemView)) {
+                            if (childMatcher.matches(childView)) {
+                                this.childView = childView
+                                break
+                            }
                         }
                     }
                 }
@@ -118,10 +120,12 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
             override fun matchesSafely(view: View?): Boolean {
                 if (itemView == null) itemView = findItemViewAtPosition(position, view?.rootView)
                 if (itemView != null) {
-                    for (childView in TreeIterables.breadthFirstViewTraversal(itemView)) {
-                        if (childMatcher.matches(childView)) {
-                            this.childView = childView
-                            break
+                    if (childView == null) {
+                        for (childView in TreeIterables.breadthFirstViewTraversal(itemView)) {
+                            if (childMatcher.matches(childView)) {
+                                this.childView = childView
+                                break
+                            }
                         }
                     }
                 }

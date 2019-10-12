@@ -9,20 +9,20 @@ class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val ac
     @Volatile var exception : Throwable? = null
 
     override fun execute()  {
-        val result = booleanArrayOf(true)
+        var result: Boolean
         val startTime = System.currentTimeMillis()
         val endTime = startTime + ViewActionsConfig.ACTION_TIMEOUT
         do {
-            result[0] = true
+            result = true
             viewInteraction.withFailureHandler { error, viewMatcher ->
                 if (error::class.java in ViewActionsConfig.allowedExceptions){
-                    result[0] = false
+                    result = false
                     exception = error
                 } else throw error
             }.perform(action.viewAction)
-            if (!result[0]) Thread.sleep(50)
-        } while (System.currentTimeMillis() < endTime && !result[0])
-        if (!result[0] && exception != null){
+            if (!result) Thread.sleep(50)
+        } while (System.currentTimeMillis() < endTime && !result)
+        if (!result && exception != null){
             throw exception as Throwable
         }
     }
