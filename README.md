@@ -14,7 +14,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.5'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.8'
 }
 ```
 Maven
@@ -22,7 +22,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.8</version>
   <type>pom</type>
 </dependency>
 ```
