@@ -1,5 +1,6 @@
 package com.atiurin.espressopageobject.extensions.executors
 
+import android.os.SystemClock
 import androidx.test.espresso.ViewInteraction
 import com.atiurin.espressopageobject.extensions.ViewActionsConfig
 import com.atiurin.espressopageobject.extensions.entities.EspressoAction
@@ -10,7 +11,7 @@ class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val ac
 
     override fun execute()  {
         var result: Boolean
-        val startTime = System.currentTimeMillis()
+        val startTime = SystemClock.elapsedRealtime()
         val endTime = startTime + ViewActionsConfig.ACTION_TIMEOUT
         do {
             result = true
@@ -21,7 +22,7 @@ class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val ac
                 } else throw error
             }.perform(action.viewAction)
             if (!result) Thread.sleep(50)
-        } while (System.currentTimeMillis() < endTime && !result)
+        } while (SystemClock.elapsedRealtime() < endTime && !result)
         if (!result && exception != null){
             throw exception as Throwable
         }
