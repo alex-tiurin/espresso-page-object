@@ -6,9 +6,14 @@ import androidx.test.espresso.DataInteraction
 import androidx.test.espresso.action.EspressoKey
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.ViewMatchers
-import com.atiurin.espressopageobject.extensions.entities.EspressoAction
-import com.atiurin.espressopageobject.extensions.executors.DataInteractionActionExecutor
-import com.atiurin.espressopageobject.extensions.executors.DataInteractionAssertionExecutor
+import com.atiurin.espressopageobject.core.action.ActionType
+import com.atiurin.espressopageobject.core.action.EspressoAction
+import com.atiurin.espressopageobject.core.action.ViewActionLifecycle.actionOnView
+import com.atiurin.espressopageobject.core.assertion.AssertionType
+import com.atiurin.espressopageobject.core.assertion.EspressoAssertion
+import com.atiurin.espressopageobject.core.assertion.ViewAssertionLifecycle.assertView
+import com.atiurin.espressopageobject.core.executors.DataInteractionActionExecutor
+import com.atiurin.espressopageobject.core.executors.DataInteractionAssertionExecutor
 import org.hamcrest.Matcher
 
 
@@ -16,7 +21,10 @@ fun DataInteraction.click() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.CLICK, ViewActions.click())
+            EspressoAction(
+                ActionType.CLICK,
+                ViewActions.click()
+            )
         )
     )
 }
@@ -25,7 +33,10 @@ fun DataInteraction.doubleClick() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.DOUBLE_CLICK, ViewActions.doubleClick())
+            EspressoAction(
+                ActionType.DOUBLE_CLICK,
+                ViewActions.doubleClick()
+            )
         )
     )
 }
@@ -34,7 +45,10 @@ fun DataInteraction.longClick() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.LONG_CLICK, ViewActions.longClick())
+            EspressoAction(
+                ActionType.LONG_CLICK,
+                ViewActions.longClick()
+            )
         )
     )
 }
@@ -43,7 +57,10 @@ fun DataInteraction.typeText(text: String) = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.TYPE_TEXT, ViewActions.typeText(text))
+            EspressoAction(
+                ActionType.TYPE_TEXT,
+                ViewActions.typeText(text)
+            )
         )
     )
 }
@@ -52,7 +69,10 @@ fun DataInteraction.replaceText(text: String) = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.REPLACE_TEXT, ViewActions.replaceText(text))
+            EspressoAction(
+                ActionType.REPLACE_TEXT,
+                ViewActions.replaceText(text)
+            )
         )
     )
 }
@@ -61,7 +81,10 @@ fun DataInteraction.clearText() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.CLEAR_TEXT, ViewActions.clearText())
+            EspressoAction(
+                ActionType.CLEAR_TEXT,
+                ViewActions.clearText()
+            )
         )
     )
 }
@@ -70,7 +93,10 @@ fun DataInteraction.pressKey(keyCode: Int) = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.PRESS_KEY, ViewActions.pressKey(keyCode))
+            EspressoAction(
+                ActionType.PRESS_KEY,
+                ViewActions.pressKey(keyCode)
+            )
         )
     )
 }
@@ -79,7 +105,10 @@ fun DataInteraction.pressKey(key: EspressoKey) = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.PRESS_KEY, ViewActions.pressKey(key))
+            EspressoAction(
+                ActionType.PRESS_KEY,
+                ViewActions.pressKey(key)
+            )
         )
     )
 }
@@ -88,7 +117,10 @@ fun DataInteraction.closeSoftKeyboard() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.CLOSE_SOFT_KEYBOARD, ViewActions.closeSoftKeyboard())
+            EspressoAction(
+                ActionType.CLOSE_SOFT_KEYBOARD,
+                ViewActions.closeSoftKeyboard()
+            )
         )
     )
 }
@@ -97,7 +129,10 @@ fun DataInteraction.swipeLeft() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.SWIPE_LEFT, ViewActions.swipeLeft())
+            EspressoAction(
+                ActionType.SWIPE_LEFT,
+                ViewActions.swipeLeft()
+            )
         )
     )
 }
@@ -106,7 +141,10 @@ fun DataInteraction.swipeRight() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.SWIPE_RIGHT, ViewActions.swipeRight())
+            EspressoAction(
+                ActionType.SWIPE_RIGHT,
+                ViewActions.swipeRight()
+            )
         )
     )
 }
@@ -115,7 +153,10 @@ fun DataInteraction.swipeUp() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.SWIPE_UP, ViewActions.swipeUp())
+            EspressoAction(
+                ActionType.SWIPE_UP,
+                ViewActions.swipeUp()
+            )
         )
     )
 }
@@ -124,7 +165,10 @@ fun DataInteraction.swipeDown() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.SWIPE_DOWN, ViewActions.swipeDown())
+            EspressoAction(
+                ActionType.SWIPE_DOWN,
+                ViewActions.swipeDown()
+            )
         )
     )
 }
@@ -133,7 +177,10 @@ fun DataInteraction.scrollTo() = apply {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.SCROLL, ViewActions.scrollTo())
+            EspressoAction(
+                ActionType.SCROLL,
+                ViewActions.scrollTo()
+            )
         )
     )
 }
@@ -142,7 +189,10 @@ fun DataInteraction.execute(viewAction: ViewAction) {
     actionOnView(
         DataInteractionActionExecutor(
             this,
-            EspressoAction(ViewActionsConfig.ActionType.CUSTOM, viewAction)
+            EspressoAction(
+                ActionType.CUSTOM,
+                viewAction
+            )
         )
     )
 }
@@ -152,7 +202,10 @@ fun DataInteraction.isDisplayed() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_DISPLAYED, ViewMatchers.isDisplayed())
+            EspressoAssertion(
+                AssertionType.IS_DISPLAYED,
+                ViewMatchers.isDisplayed()
+            )
         )
     )
 }
@@ -162,7 +215,7 @@ fun DataInteraction.isCompletelyDisplayed() = apply {
         DataInteractionAssertionExecutor(
             this,
             EspressoAssertion(
-                ViewAssertionsConfig.AssertionType.IS_COMPLETELY_DISPLAYED,
+                AssertionType.IS_COMPLETELY_DISPLAYED,
                 ViewMatchers.isCompletelyDisplayed()
             )
         )
@@ -174,7 +227,7 @@ fun DataInteraction.isDisplayingAtLeast(percentage: Int) = apply {
         DataInteractionAssertionExecutor(
             this,
             EspressoAssertion(
-                ViewAssertionsConfig.AssertionType.IS_DISPLAYING_AT_LEAST,
+                AssertionType.IS_DISPLAYING_AT_LEAST,
                 ViewMatchers.isDisplayingAtLeast(percentage)
             )
         )
@@ -185,7 +238,10 @@ fun DataInteraction.isEnabled() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_ENABLED, ViewMatchers.isEnabled())
+            EspressoAssertion(
+                AssertionType.IS_ENABLED,
+                ViewMatchers.isEnabled()
+            )
         )
     )
 }
@@ -194,7 +250,10 @@ fun DataInteraction.isSelected() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_SELECTED, ViewMatchers.isSelected())
+            EspressoAssertion(
+                AssertionType.IS_SELECTED,
+                ViewMatchers.isSelected()
+            )
         )
     )
 }
@@ -203,7 +262,10 @@ fun DataInteraction.isClickable() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_CLICKABLE, ViewMatchers.isClickable())
+            EspressoAssertion(
+                AssertionType.IS_CLICKABLE,
+                ViewMatchers.isClickable()
+            )
         )
     )
 }
@@ -212,7 +274,10 @@ fun DataInteraction.isChecked() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_CHECKED, ViewMatchers.isChecked())
+            EspressoAssertion(
+                AssertionType.IS_CHECKED,
+                ViewMatchers.isChecked()
+            )
         )
     )
 }
@@ -221,7 +286,10 @@ fun DataInteraction.isNotChecked() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_NOT_CHECKED, ViewMatchers.isNotChecked())
+            EspressoAssertion(
+                AssertionType.IS_NOT_CHECKED,
+                ViewMatchers.isNotChecked()
+            )
         )
     )
 }
@@ -230,7 +298,10 @@ fun DataInteraction.isFocusable() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_FOCUSABLE, ViewMatchers.isFocusable())
+            EspressoAssertion(
+                AssertionType.IS_FOCUSABLE,
+                ViewMatchers.isFocusable()
+            )
         )
     )
 }
@@ -239,7 +310,10 @@ fun DataInteraction.isJavascriptEnabled() = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.IS_JS_ENABLED, ViewMatchers.isJavascriptEnabled())
+            EspressoAssertion(
+                AssertionType.IS_JS_ENABLED,
+                ViewMatchers.isJavascriptEnabled()
+            )
         )
     )
 }
@@ -248,7 +322,10 @@ fun DataInteraction.hasText(text: String) = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.HAS_TEXT, ViewMatchers.withText(text))
+            EspressoAssertion(
+                AssertionType.HAS_TEXT,
+                ViewMatchers.withText(text)
+            )
         )
     )
 }
@@ -257,7 +334,10 @@ fun DataInteraction.assertMatches(condition: Matcher<View>) = apply {
     assertView(
         DataInteractionAssertionExecutor(
             this,
-            EspressoAssertion(ViewAssertionsConfig.AssertionType.ASSERT_MATCHES, condition)
+            EspressoAssertion(
+                AssertionType.ASSERT_MATCHES,
+                condition
+            )
         )
     )
 }

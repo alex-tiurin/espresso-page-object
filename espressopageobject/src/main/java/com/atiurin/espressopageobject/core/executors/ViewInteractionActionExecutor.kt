@@ -1,22 +1,21 @@
-package com.atiurin.espressopageobject.extensions.executors
+package com.atiurin.espressopageobject.core.executors
 
 import android.os.SystemClock
 import androidx.test.espresso.ViewInteraction
-import com.atiurin.espressopageobject.extensions.ViewActionsConfig
-import com.atiurin.espressopageobject.extensions.entities.EspressoAction
+import com.atiurin.espressopageobject.core.action.EspressoAction
+import com.atiurin.espressopageobject.core.action.ViewActionConfig
 
 class ViewInteractionActionExecutor(val viewInteraction: ViewInteraction, val action: EspressoAction) :
     ActionExecutor {
-    @Volatile var exception : Throwable? = null
+    var exception : Throwable? = null
 
     override fun execute()  {
         var result: Boolean
-        val startTime = SystemClock.elapsedRealtime()
-        val endTime = startTime + ViewActionsConfig.ACTION_TIMEOUT
+        val endTime = SystemClock.elapsedRealtime() + ViewActionConfig.ACTION_TIMEOUT
         do {
             result = true
             viewInteraction.withFailureHandler { error, viewMatcher ->
-                if (error::class.java in ViewActionsConfig.allowedExceptions){
+                if (error::class.java in ViewActionConfig.allowedExceptions){
                     result = false
                     exception = error
                 } else throw error

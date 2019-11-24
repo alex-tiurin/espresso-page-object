@@ -1,7 +1,6 @@
 package com.atiurin.espressopageobjectexample.tests
 
 import android.content.Intent
-import android.util.Log
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
@@ -23,20 +22,6 @@ class AdvancedEspressoTest {
     @Rule
     @JvmField
     val mActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
-
-    companion object {
-
-        @BeforeClass @JvmStatic
-        fun beforeClass(){
-            ViewActionsConfig.beforeAction = {
-                Log.d("Espresso", "before clasee ${ViewActionsConfig.currentEspressoAction?.type?.name}")
-            }
-
-            ViewActionsConfig.afterAction = {
-                Log.d("Espresso", "made action")
-            }
-        }
-    }
 
     @Before
     fun registerResource() {
@@ -62,7 +47,7 @@ class AdvancedEspressoTest {
     @Test
     fun advancedSendMessageWithPageObject() {
         val messageText = "message3"
-        FriendsListPage().getListItem("Janice").click()
+        FriendsListPage().getListItem("Janice2").click()
         val chatPage = ChatPage()
         chatPage.getTitle("Janice").isDisplayed()
         chatPage.openOptionsMenu()

@@ -12,7 +12,6 @@ import com.atiurin.espressopageobject.extensions.isDisplayed
 import com.atiurin.espressopageobject.extensions.typeText
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers
 import org.hamcrest.Matchers.allOf
 
 class ChatPage : Page {
