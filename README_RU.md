@@ -13,7 +13,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.9'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.13'
 }
 ```
 Maven
@@ -21,7 +21,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.9</version>
+  <version>0.1.13</version>
   <type>pom</type>
 </dependency>
 ```
@@ -77,15 +77,16 @@ class ChatPage {
 ```kotlin
     @Test
     fun friendsItemCheck(){
-        FriendsListPage()
-            .assertName("Janice")
-            .assertStatus("Janice","Oh. My. God")
+         FriendsListPage {
+            assertName("Janice")
+            assertStatus("Janice","Oh. My. God")
+        }
     }
     @Test
     fun sendMessage(){
         FriendsListPage().openChat("Janice")
         ChatPage().clearHistory()
-            .sendMessage("test message")
+                  .sendMessage("test message")
     }
 ```
 
@@ -195,16 +196,84 @@ class SomePage{
 
 Вы можете отключить подобное поведение добавив перед тестом строки
 ```kotlin
-ViewActionsConfig.allowedExceptions.clear()     
-ViewAssertionsConfig.allowedExceptions.clear() 
+ViewActionConfig.allowedExceptions.clear()// disable failure handler
+ViewAssertionConfig.allowedExceptions.clear()// disable failure handler
 ```
 Можете расширить список обрабатываемых исключений:
 ```kotlin
-ViewActionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
-ViewAssertionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
+ViewActionConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
+ViewAssertionConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
 ```
 Можете поменять время тайм-аута действия и проверки:
 ```kotlin
-ViewActionsConfig.ACTION_TIMEOUT = 10000L
-ViewAssertionsConfig.ASSERTION_TIMEOUT = 10000L
+ViewActionConfig.ACTION_TIMEOUT = 10_000L
+ViewAssertionConfig.ASSERTION_TIMEOUT = 10_000L
 ```
+
+### Lifecycle Listeners
+
+В библиотеке есть интерфейс, который позволяет прослушивать все действия
+и проверки в момент их выполнения. Для этого интерфейс предоставляет 4
+метода.
+
+```kotlin
+LifecycleListener{
+    /**
+     * executed before any action or assertion
+     */
+    fun before(description: Description)
+    /**
+     * called only if action or assertion executed successfully
+     */
+    fun afterSuccess(description: Description)
+
+    /**
+     * called only if action or assertion failed
+     */
+    fun afterFailure(description: Description, throwable: Throwable)
+
+    /**
+     * executed in any case of operation result
+     */
+    fun after(description: Description)
+    ...
+}
+```
+
+Для того, чтобы воспользоваться этим интерфейсом, вам необходимо создать
+наследника абстрактного класса `AbstractLifecycleListener`. Например,
+создадим листенер, который будет делать скриншот в случае неуспешного
+выполнения действия или проверки.
+```kotlin
+class ScreenshotLifecycleListener : AbstractLifecycleListener(){
+    override fun afterFailure(description: Description, throwable: Throwable) {
+        takeScreenshot(description.type.toString()) // takeScreenshot() isn't implemented
+    }
+}
+```
+
+Теперь, созданный listener необходимо добавить в список используемых.
+ ```kotlin
+companion object {
+    @BeforeClass @JvmStatic
+    fun beforeClass() {
+        val listener = ScreenshotLifecycleListener()
+        ViewActionLifecycle.addListener(listener)
+        ViewAssertionLifecycle.addListener(listener)
+    }
+}
+```
+
+По умолчанию в список используемых listeners для действий и проверок
+добавлен `LogLifecycleListener`. 
+
+Если вы хотите сбросить список используемых listeners, то необходимо
+сделать следующее:
+
+```kotlin
+ViewActionLifecycle.clearListeners()
+ViewAssertionLifecycle.clearListeners()
+```
+
+*Обратить внимание, что тяжелый listener может снизить скорость
+выполнения ваших тестов!*

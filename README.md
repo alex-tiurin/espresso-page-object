@@ -14,7 +14,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.9'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.13'
 }
 ```
 Maven
@@ -22,7 +22,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.9</version>
+  <version>0.1.13</version>
   <type>pom</type>
 </dependency>
 ```
@@ -79,9 +79,10 @@ Full code sample [ChatPage.class](https://github.com/alex-tiurin/espresso-page-o
 ```kotlin
     @Test
     fun friendsItemCheck(){
-        FriendsListPage()
-            .assertName("Janice")
-            .assertStatus("Janice","Oh. My. God")
+        FriendsListPage {
+            assertName("Janice")
+            assertStatus("Janice","Oh. My. God")
+        }
     }
     @Test
     fun sendMessage(){
@@ -205,17 +206,77 @@ This approach allows us to reduce test flakiness.
 It is possible to turn off this logic by adding next lines before test:
 
 ```kotlin
-ViewActionsConfig.allowedExceptions.clear()     
-ViewAssertionsConfig.allowedExceptions.clear() 
+ViewActionConfig.allowedExceptions.clear()// disable failure handler
+ViewAssertionConfig.allowedExceptions.clear()// disable failure handler
 ```
 
 You can extend the list of caught exceptions:
 ```kotlin
-ViewActionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
-ViewAssertionsConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
+ViewActionConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
+ViewAssertionConfig.allowedExceptions.add(AmbiguousViewMatcherException::class.java)
 ```
 You can change the timeout value for actions and assertions:
 ```kotlin
-ViewActionsConfig.ACTION_TIMEOUT = 10000L
-ViewAssertionsConfig.ASSERTION_TIMEOUT = 10000L
+ViewActionConfig.ACTION_TIMEOUT = 10_000L
+ViewAssertionConfig.ASSERTION_TIMEOUT = 10_000L
 ```
+### Lifecycle Listeners
+
+There is an interface to listen all actions and assertions in your test. 
+It provides 4 methods to catch that's happening while operation execution.
+
+```kotlin
+LifecycleListener{
+    /**
+     * executed before any action or assertion
+     */
+    fun before(description: Description)
+    /**
+     * called only if action or assertion executed successfully
+     */
+    fun afterSuccess(description: Description)
+
+    /**
+     * called only if action or assertion failed
+     */
+    fun afterFailure(description: Description, throwable: Throwable)
+
+    /**
+     * executed in any case of operation result
+     */
+    fun after(description: Description)
+    ...
+}
+```
+To use this interface you need to create a child class of `AbstractLifecycleListener`. 
+For example, let's create screenshot listener which will make a screenshot in case of action or assertion failure.
+```kotlin
+class ScreenshotLifecycleListener : AbstractLifecycleListener(){
+    override fun afterFailure(description: Description, throwable: Throwable) {
+        takeScreenshot(description.type.toString()) // takeScreenshot() isn't implemented
+    }
+}
+```
+To add new listener to lifecycle:
+```kotlin
+companion object {
+    @BeforeClass @JvmStatic
+    fun beforeClass() {
+        val listener = ScreenshotLifecycleListener()
+        ViewActionLifecycle.addListener(listener)
+        ViewAssertionLifecycle.addListener(listener)
+    }
+}
+```
+
+There is an implementation of a `LogLifecycleListener` and it has been
+added to ViewActionLifecycle and ViewAssertionLifecycle listeners by
+default.
+
+If you want to drop the list of listeners use:
+```kotlin
+ViewActionLifecycle.clearListeners()
+ViewAssertionLifecycle.clearListeners()
+```
+
+*Note that heavy listeners could slow down your tests speed!*
