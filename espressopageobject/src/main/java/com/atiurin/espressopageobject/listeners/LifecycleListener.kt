@@ -11,17 +11,17 @@ internal interface LifecycleListener{
      */
     fun before(description: Description)
     /**
-     * called only if action or assertion executed successfully
+     * called when action or assertion has been executed successfully
      */
     fun afterSuccess(description: Description)
 
     /**
-     * called only if action or assertion failed
+     * called when action or assertion failed
      */
     fun afterFailure(description: Description, throwable: Throwable)
 
     /**
-     * executed in any case of operation result
+     * called in any case of action or assertion result
      */
     fun after(description: Description)
 
