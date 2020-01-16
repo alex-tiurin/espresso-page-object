@@ -1,6 +1,7 @@
 package com.atiurin.espressopageobjectexample.pages
 
 import android.view.View
+import androidx.core.view.size
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -11,8 +12,10 @@ import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
 import com.atiurin.espressopageobject.extensions.typeText
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
+import com.atiurin.espressopageobject.recyclerview.withRecyclerView
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.junit.Assert
 
 class ChatPage : Page {
     override fun assertPageDisplayed() = apply {
@@ -71,6 +74,7 @@ class ChatPage : Page {
         step("Clear chat history") {
             openOptionsMenu()
             clearHistoryBtn.click()
+            Assert.assertEquals(0, withRecyclerView(messagesList).getSize())
         }
     }
 

@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 
 open class BaseTest{
-//    private val idlingRes = ContactsIdlingResource.getInstanceFromTest()
+    private val idlingRes = ContactsIdlingResource.getInstanceFromTest()
     @Rule
     @JvmField
     val mActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
@@ -23,11 +23,11 @@ open class BaseTest{
         AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(
             CURRENT_USER.login, CURRENT_USER.password)
         mActivityRule.launchActivity(Intent())
-//        IdlingRegistry.getInstance().register(idlingRes)
+        IdlingRegistry.getInstance().register(idlingRes)
     }
 
     @After
     fun unregisterResource() {
-//        IdlingRegistry.getInstance().unregister(idlingRes)
+        IdlingRegistry.getInstance().unregister(idlingRes)
     }
 }

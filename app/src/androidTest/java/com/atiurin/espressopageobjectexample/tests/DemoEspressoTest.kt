@@ -1,5 +1,6 @@
 package com.atiurin.espressopageobjectexample.tests
 
+import com.atiurin.espressopageobjectexample.data.repositories.CONTACTS
 import com.atiurin.espressopageobjectexample.pages.ChatPage
 import com.atiurin.espressopageobjectexample.pages.FriendsListPage
 import org.junit.Test
@@ -14,8 +15,9 @@ class DemoEspressoTest : BaseTest() {
 
     @Test
     fun sendMessage() {
-        FriendsListPage().openChat("Janice")
-        ChatPage().clearHistory()
+        FriendsListPage().openChat("Chandler Bing")
+        ChatPage()
+            .clearHistory()
             .sendMessage("test message")
     }
 
@@ -30,5 +32,11 @@ class DemoEspressoTest : BaseTest() {
             .assertMessageTextAtPosition(0, firstMessage)
             .assertMessageTextAtPosition(1, secondMessage)
 
+    }
+
+
+    @Test
+    fun testListSize(){
+        FriendsListPage().assertFriendsListSize(CONTACTS.size)
     }
 }

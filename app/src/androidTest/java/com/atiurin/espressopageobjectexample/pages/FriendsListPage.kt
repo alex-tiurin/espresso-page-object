@@ -1,15 +1,19 @@
 package com.atiurin.espressopageobjectexample.pages
 
 import android.view.View
+import androidx.core.view.size
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
+import com.atiurin.espressopageobject.recyclerview.withRecyclerView
 import com.atiurin.espressopageobjectexample.R
 import com.atiurin.espressopageobjectexample.framework.Page
 import com.atiurin.espressopageobjectexample.framework.step
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
+import org.junit.Assert
 
 class FriendsListPage : Page {
     private val friendsList = withId(R.id.recycler_friends)//withTagValue(`is`(Tags.CONTACTS_LIST))
@@ -50,5 +54,9 @@ class FriendsListPage : Page {
         step("Assert friend name '$nameText' in the right place") {
             this.getListItem(nameText).name.hasText(nameText)
         }
+    }
+
+    fun assertFriendsListSize(size: Int){
+        Assert.assertEquals(size, withRecyclerView(friendsList).getSize())
     }
 }

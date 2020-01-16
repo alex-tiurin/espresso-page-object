@@ -3,13 +3,21 @@ package com.atiurin.espressopageobject.recyclerview
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.internal.inject.InstrumentationContext
+import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.espresso.util.TreeIterables
+import androidx.test.platform.app.InstrumentationRegistry
+import com.atiurin.espressopageobject.extensions.assertMatches
+import com.atiurin.espressopageobject.extensions.execute
 import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.Matchers.any
+import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 
 open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
-    var recyclerView: RecyclerView? = null
+    private var recyclerView: RecyclerView? = null
     var itemView: View? = null
 
     open fun atItem(itemMatcher: Matcher<View>): Matcher<View> {
@@ -136,6 +144,7 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
         }
     }
 
+
     private fun findItemView(itemMatcher: Matcher<View>, rootView: View?): View? {
         for (childView in TreeIterables.breadthFirstViewTraversal(rootView)) {
             if (recyclerViewMatcher.matches(childView)) {
@@ -162,5 +171,29 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
             }
         }
         return null
+    }
+
+    private fun defineRecyclerView(): BoundedMatcher<View, RecyclerView> {
+        return object : BoundedMatcher<View, RecyclerView>(RecyclerView::class.java) {
+            override fun describeTo(description: Description) {
+                description.appendText("RecyclerView matches ").appendValue(recyclerViewMatcher)
+                return
+            }
+
+            override fun matchesSafely(view: RecyclerView): Boolean {
+                recyclerView = view
+                return recyclerViewMatcher.matches(recyclerView)
+            }
+        }
+    }
+
+    fun getRecyclerViewList(): RecyclerView? {
+        recyclerViewMatcher.assertMatches(defineRecyclerView())
+        return recyclerView
+    }
+
+    fun getSize(): Int {
+        val count = getRecyclerViewList()?.adapter?.itemCount
+        return count ?: 0
     }
 }
