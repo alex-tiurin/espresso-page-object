@@ -11,7 +11,6 @@ class AccountManager(val context: Context){
     }
 
     fun login(user: String, password: String) : Boolean{
-//        Thread.sleep(3000)
         var success = false
         // there should be some network request to app server
         if ((user == Companion.expectedUserName) &&(password == expectedPassword)){

@@ -187,12 +187,12 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
         }
     }
 
-    fun getRecyclerViewList(): RecyclerView? {
+    open fun getRecyclerViewList(): RecyclerView? {
         recyclerViewMatcher.assertMatches(defineRecyclerView())
         return recyclerView
     }
 
-    fun getSize(): Int {
+    open fun getSize(): Int {
         val count = getRecyclerViewList()?.adapter?.itemCount
         return count ?: 0
     }

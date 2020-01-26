@@ -30,7 +30,7 @@ class DemoEspressoTest : BaseTest() {
             .assertStatus("Janice", "Oh. My. God")
     }
 
-    @SetUp(FREQUENT_SETUP_KEY, SECOND_CONDITION)
+    @SetUp(SECOND_CONDITION)
     @Test
     fun sendMessage() {
         Log.info("Start test sendMessage")

@@ -14,30 +14,29 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 
-open class BaseTest{
+open class BaseTest {
 
-    companion object{
-        const val FREQUENT_SETUP_KEY = "frequent_setup_key"
+    companion object {
+        const val LOGIN_VALID_USER = "frequent_setup_key"
     }
+
     private val idlingRes = ContactsIdlingResource.getInstanceFromTest()
 
     @get:Rule
-    val mActivityRule = ActivityTestRule(MainActivity::class.java, false, false)
+    val mActivityRule = ActivityTestRule(MainActivity::class.java)
 
     @get:Rule
     open val setupRule = SetUpTearDownRule()
-        .addSetUp (FREQUENT_SETUP_KEY){ Log.info("FREQUENT_SETUP_KEY setup executed first of all")  }
-
-    @Before
-    fun registerResource() {
-        AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(
-            CURRENT_USER.login, CURRENT_USER.password)
-        mActivityRule.launchActivity(Intent())
-        IdlingRegistry.getInstance().register(idlingRes)
-    }
-
-    @After
-    fun unregisterResource() {
-        IdlingRegistry.getInstance().unregister(idlingRes)
-    }
+        .addSetUp {
+            Log.info("Login valid user")
+            AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(
+                CURRENT_USER.login, CURRENT_USER.password
+            )
+        }.addSetUp {
+            Log.info("Register idling resource")
+            IdlingRegistry.getInstance().register(idlingRes)
+        }.addTearDown {
+            Log.info("Unregister idling resource")
+            IdlingRegistry.getInstance().unregister(idlingRes)
+        }
 }
