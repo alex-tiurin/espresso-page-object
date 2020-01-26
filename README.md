@@ -14,7 +14,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.13'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.14'
 }
 ```
 Maven
@@ -22,7 +22,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.13</version>
+  <version>0.1.14</version>
   <type>pom</type>
 </dependency>
 ```
@@ -280,3 +280,74 @@ ViewAssertionLifecycle.clearListeners()
 ```
 
 *Note that heavy listeners could slow down your tests speed!*
+
+### SetUpTearDownRule
+
+This rule allows you to specify lambdas which will be definitely invoked
+before a test is started and after the test is finished (whether passing
+or failing). Moreover setup lambdas are invoked before an activity is
+launched. So, there is no need to call
+`activityRule.launchActivity(Intent())`
+
+To setup a lambda for all tests add it without any string key
+
+```kotlin
+    @get:Rule
+    open val setupRule = SetUpTearDownRule()
+        .addSetUp {
+            Log.info("Login valid user will be executed before any test is started")
+            AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(
+                CURRENT_USER.login, CURRENT_USER.password
+            )
+        }
+```
+
+In case you would like to add lambda for specific test:
+1. add lambda with string key to SetUpTearDownRule
+2. add setup annotation with specified key to desired test.
+
+```kotlin
+    setupRule.addSetUp (FIRST_CONDITION){ Log.info("$FIRST_CONDITION setup, executed for test with annotation @SetUp(FIRST_CONDITION)")  }
+    
+    @SetUp(FIRST_CONDITION)
+    @Test
+    fun friendsItemCheck() {
+        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+    }
+```
+
+The same approach works for TearDown lambdas. In a case below both
+lambdas will will be invoked after test **testWithTearDown** will have
+been finished.
+
+```kotlin
+    @get:Rule
+    open val setupRule = SetUpTearDownRule()
+            .addTearDown { Log.info("Common setup for all @Tests") }
+            .addTearDown(SECOND_CONDITION) {Log.info("$SECOND_CONDITION teardowm executed last")}
+            
+    @TearDown(SECOND_CONDITION)
+    @Test
+    fun testWithTearDown() {
+        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+    }
+```
+
+The order of lambdas execution depends on its addition order to the rule.
+
+*Note: you can specify several lambdas for single test in @SetUp and
+@TearDown*
+
+```kotlin
+@SetUp(FIRST_CONDITION, SECOND_CONDITION)
+@TearDown(FIRST_CONDITION, SECOND_CONDITION)
+```
+
+Full code sample
+[DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+and
+[BaseTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/BaseTest.kt)
+
+To definitely understand how it works you can run tests of
+*DemoEspressoTest* class and watch logcat output with tag =
+**EspressoPageObject**.

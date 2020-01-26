@@ -13,7 +13,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.13'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.14'
 }
 ```
 Maven
@@ -21,7 +21,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.13</version>
+  <version>0.1.14</version>
   <type>pom</type>
 </dependency>
 ```
@@ -277,3 +277,77 @@ ViewAssertionLifecycle.clearListeners()
 
 *Обратить внимание, что тяжелый listener может снизить скорость
 выполнения ваших тестов!*
+
+### SetUpTearDownRule
+
+Это правило позволяет добавлять ламбда-выражения, которые гарантированно
+будут выдолнены до начала теста и после его окончания, вне зависимасти
+от успешности прохождения теста. Более того, эти лямбды гарантированно
+выполнятся до старта activity приложения. Больше не надо писать
+`activityRule.launchActivity(Intent())`
+
+Для того, чтобы задать лямбду, которая будет выполняться для всех
+тестов, необходимо добавить ее без ключа к правилу. 
+
+
+```kotlin
+    @get:Rule
+    open val setupRule = SetUpTearDownRule()
+        .addSetUp {
+            Log.info("Login valid user will be executed before any test is started")
+            AccountManager(InstrumentationRegistry.getInstrumentation().targetContext).login(
+                CURRENT_USER.login, CURRENT_USER.password
+            )
+        }
+```
+
+Елси вам нужно задать лямду, которая выполняется для определенных
+тестов, необходимо сделать следующее: 
+1. добавить лямбду со строковым ключом к объекту SetUpTearDownRule
+2. добавить желаемому тесту аннотацию SetUp и указать в качестве value
+   ключ ламбда-выражения.
+   
+```kotlin
+    setupRule.addSetUp (FIRST_CONDITION){ Log.info("$FIRST_CONDITION setup, executed for test with annotation @SetUp(FIRST_CONDITION)")  }
+    
+    @SetUp(FIRST_CONDITION)
+    @Test
+    fun friendsItemCheck() {
+        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+    }
+```
+
+Такой же подход работает и для TearDown ламбда-выражений. В приведенном
+ниже примере, обе лямбды будут выполнены после завершения теста
+**testWithTearDown**. 
+
+```kotlin
+    @get:Rule
+    open val setupRule = SetUpTearDownRule()
+            .addTearDown { Log.info("Common setup for all @Tests") }
+            .addTearDown(SECOND_CONDITION) {Log.info("$SECOND_CONDITION teardowm executed last")}
+            
+    @TearDown(SECOND_CONDITION)
+    @Test
+    fun testWithTearDown() {
+        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+    }
+```
+Порядок выполнения лямбда-выражений зависит от порядка их добавления к
+объекту **SetUpTearDownRule**
+
+*Причемание: в аннотациях @SetUp и @TearDown можно указывать массив
+ключей лямбда-выражений.*
+
+```kotlin
+@SetUp(FIRST_CONDITION, SECOND_CONDITION)
+@TearDown(FIRST_CONDITION, SECOND_CONDITION)
+```
+
+Полный пример кода см. 
+[DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+и [BaseTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/BaseTest.kt)
+
+Чтобы полностью понять как это работает, рекоммендую запустить тесты
+класса *DemoEspressoTest* и посмотреть logcat c tag =
+**EspressoPageObject**.
