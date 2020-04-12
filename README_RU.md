@@ -278,12 +278,40 @@ ViewAssertionLifecycle.clearListeners()
 *Обратить внимание, что тяжелый listener может снизить скорость
 выполнения ваших тестов!*
 
+### RuleSequence
+
+Это правило, которе является удобной и продвинутой альтернативой х
+*RuleChain* из JUnit 4. Оно позволяет выстраивать строгий порядок
+выполнения правил.
+
+ Корень проблемы лежит в том, что порядок запуска
+правил в JUnit 4 определяется механизмом рефлексии JVM и по сути
+сводится к зависимости порядка запуска от имени переменной, которое мы
+присвоем объекту с аннотацией @Rule. В Junit 4, эту проблему решает
+RuleChain. Но делает это он совершенно не удобным и не интуитивным
+способом. RuleChain особенно плохо ложится в механизм наследования
+классов. Поэтому и появился
+[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt).
+
+Очередность выполнения правил в RuleSequence зависит от порядка их
+добавления. При этом есть три списка правил с разным приоритетом:
+- first - правила, добавленные в этот список, выполняются всегда раньше
+  остальных
+- normal - в этот список правила добаляются по умолчанию
+- last - эти правила всегда выполняются последними
+
+См. полный код с примером использования в следующих классах:
+- [BaseTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/BaseTest.kt)
+- [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+
 ### SetUpTearDownRule
 
 Это правило позволяет добавлять ламбда-выражения, которые гарантированно
 будут выдолнены до начала теста и после его окончания, вне зависимасти
-от успешности прохождения теста. Более того, эти лямбды гарантированно
-выполнятся до старта activity приложения. Больше не надо писать
+от успешности прохождения теста. Более того, в комбинации с
+эти лямбды гарантированно могут выполнятся до старта activity
+[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt).  
+приложения. Больше не надо писать
 `activityRule.launchActivity(Intent())`
 
 Для того, чтобы задать лямбду, которая будет выполняться для всех
@@ -291,7 +319,6 @@ ViewAssertionLifecycle.clearListeners()
 
 
 ```kotlin
-    @get:Rule
     open val setupRule = SetUpTearDownRule()
         .addSetUp {
             Log.info("Login valid user will be executed before any test is started")
@@ -351,3 +378,20 @@ ViewAssertionLifecycle.clearListeners()
 Чтобы полностью понять как это работает, рекоммендую запустить тесты
 класса *DemoEspressoTest* и посмотреть logcat c tag =
 **EspressoPageObject**.
+
+### RuleSequence + SetUpTearDownRule => full control under your tests
+
+Умело комбинируя эти 2 правила, вы можете: ### RuleSequence + SetUpTearDownRule => full control under your tests
+
+Умело комбинируя эти 2 правила, вы можете:
+- контролировать выполенние пред- и пост-условий для каждого теста
+- контролировать момент запуска activity приложения.
+- не писать методы @Before и @After, заменив их на добавление одной лямбды в SetUpTearDownRule
+- добавлять сколько угодно правил SetUpTearDownRule внутрь RuleSequence,
+  комбинирую условия для тестов желаемым образом.
+- контролировать выполенние пред- и пост-условий для каждого теста
+- контролировать момент запуска activity приложения.
+- не писать методы @Before и @After, заменив их на добавление одной лямбды в SetUpTearDownRule
+- добавлять сколько угодно правил SetUpTearDownRule внутрь RuleSequence,
+  комбинирую условия для тестов желаемым образом.
+

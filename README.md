@@ -281,18 +281,38 @@ ViewAssertionLifecycle.clearListeners()
 
 *Note that heavy listeners could slow down your tests speed!*
 
+### RuleSequence
+
+This rule is a modern replacement of JUnit 4 *RuleChain*. It allows to
+control an order of rules execution.
+
+The RuleChain is not flexible.It is unpleasant to use RuleChain
+especially with class inheritance. That's why
+[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt)
+has been created.
+
+The order of rules execution depends on its addition order.  
+RuleSequence contains three rules lists with their own priority.
+- first - rules from this list will be executed first of all
+- normal - rules will be added to this list by default
+- last - rules from this list will be executed last
+
+Full code sample:
+- [BaseTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/BaseTest.kt)
+- [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
+
 ### SetUpTearDownRule
 
 This rule allows you to specify lambdas which will be definitely invoked
 before a test is started and after the test is finished (whether passing
-or failing). Moreover setup lambdas are invoked before an activity is
-launched. So, there is no need to call
-`activityRule.launchActivity(Intent())`
+or failing). Moreover in combination with
+[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt)
+setup lambdas could be invoked before an activity is launched. So, there
+is no need to call `activityRule.launchActivity(Intent())`
 
 To setup a lambda for all tests add it without any string key
 
 ```kotlin
-    @get:Rule
     open val setupRule = SetUpTearDownRule()
         .addSetUp {
             Log.info("Login valid user will be executed before any test is started")
@@ -321,7 +341,6 @@ lambdas will will be invoked after test **testWithTearDown** will have
 been finished.
 
 ```kotlin
-    @get:Rule
     open val setupRule = SetUpTearDownRule()
             .addTearDown { Log.info("Common setup for all @Tests") }
             .addTearDown(SECOND_CONDITION) {Log.info("$SECOND_CONDITION teardowm executed last")}
@@ -351,3 +370,11 @@ and
 To definitely understand how it works you can run tests of
 *DemoEspressoTest* class and watch logcat output with tag =
 **EspressoPageObject**.
+
+### RuleSequence + SetUpTearDownRule => full control under your tests
+
+- control the execution of pre- and postconditions of each test
+- control the moment of activity launching. It is one of the most  important point in android automation.
+- don't write @Before and @After methods by changing it to the single
+  lambda of SetUpTearDownRule object
+- combine conditions of your test in unlimited number of SetUpTearDownRule objects and add  them to RuleSequence
