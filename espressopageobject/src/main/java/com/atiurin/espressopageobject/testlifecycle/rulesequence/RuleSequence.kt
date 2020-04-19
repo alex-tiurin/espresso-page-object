@@ -27,9 +27,11 @@ class RuleSequence : TestRule {
     constructor(rules: List<TestRule> = mutableListOf()) {
         this.add(rules)
     }
+
     constructor(rule: TestRule) {
         this.add(rule)
     }
+
     constructor(vararg rules: TestRule) {
         this.add(rules.asList())
     }
@@ -37,9 +39,16 @@ class RuleSequence : TestRule {
     fun add(rule: TestRule) = apply {
         this.rules.add(RuleContainer(rulesCounter.getAndIncrement(), rule))
     }
-    fun add(vararg rules: TestRule){
-        this.rules.addAll(rules.asList().map { rule -> RuleContainer(rulesCounter.getAndIncrement(), rule) })
+
+    fun add(vararg rules: TestRule) = apply {
+        this.rules.addAll(rules.asList().map { rule ->
+            RuleContainer(
+                rulesCounter.getAndIncrement(),
+                rule
+            )
+        })
     }
+
     fun add(rules: List<TestRule>) = apply {
         this.rules.addAll(rules.map { rule -> RuleContainer(rulesCounter.getAndIncrement(), rule) })
     }
@@ -47,9 +56,16 @@ class RuleSequence : TestRule {
     fun addFirst(rule: TestRule) = apply {
         this.firstRules.add(RuleContainer(firstRulesCounter.getAndIncrement(), rule))
     }
-    fun addFirst(vararg rules: TestRule){
-        this.firstRules.addAll(rules.asList().map { rule -> RuleContainer(firstRulesCounter.getAndIncrement(), rule) })
+
+    fun addFirst(vararg rules: TestRule) = apply {
+        this.firstRules.addAll(rules.asList().map { rule ->
+            RuleContainer(
+                firstRulesCounter.getAndIncrement(),
+                rule
+            )
+        })
     }
+
     fun addFirst(rules: List<TestRule>) = apply {
         this.firstRules.addAll(rules.map { rule ->
             RuleContainer(
@@ -62,9 +78,16 @@ class RuleSequence : TestRule {
     fun addLast(rule: TestRule) = apply {
         this.lastRules.add(RuleContainer(lastRulesCounter.getAndIncrement(), rule))
     }
-    fun addLast(vararg rules: TestRule){
-        this.lastRules.addAll(rules.asList().map { rule -> RuleContainer(lastRulesCounter.getAndIncrement(), rule) })
+
+    fun addLast(vararg rules: TestRule) = apply {
+        this.lastRules.addAll(rules.asList().map { rule ->
+            RuleContainer(
+                lastRulesCounter.getAndIncrement(),
+                rule
+            )
+        })
     }
+
     fun addLast(rules: List<TestRule>) = apply {
         this.lastRules.addAll(rules.map { rule ->
             RuleContainer(

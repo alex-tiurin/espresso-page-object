@@ -13,7 +13,7 @@ repositories {
 }
     
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.14'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.16'
 }
 ```
 Maven
@@ -21,7 +21,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.14</version>
+  <version>0.1.16</version>
   <type>pom</type>
 </dependency>
 ```
@@ -309,8 +309,8 @@ RuleChain. Но делает это он совершенно не удобны�
 Это правило позволяет добавлять ламбда-выражения, которые гарантированно
 будут выдолнены до начала теста и после его окончания, вне зависимасти
 от успешности прохождения теста. Более того, в комбинации с
+[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt)
 эти лямбды гарантированно могут выполнятся до старта activity
-[RuleSequence](https://github.com/alex-tiurin/espresso-page-object/blob/master/espressopageobject/src/main/java/com/atiurin/espressopageobject/testlifecycle/rulesequence/RuleSequence.kt).  
 приложения. Больше не надо писать
 `activityRule.launchActivity(Intent())`
 
