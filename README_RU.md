@@ -1,5 +1,7 @@
 # Espresso page object
 
+[![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
+
 Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
 Вам не нужно запоминать новые классы, изучать новый синтаксис. Все действия у вас появляются из коробки.
 Для продвинутых пользователей библиотека предоставляет хорошую возможность в кастомизации и расширении возможностей DSL.

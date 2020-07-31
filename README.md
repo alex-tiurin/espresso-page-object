@@ -1,5 +1,7 @@
 # Espresso page object
 
+[![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
+
 This library provides access to nice and simple DSL for Espresso framework.
 You don't need to learn any new classes or special syntax. All magic actions and assertions are provided from crunch.
 Library can be easy customised and extended by advanced user. Wish you only stable tests!
