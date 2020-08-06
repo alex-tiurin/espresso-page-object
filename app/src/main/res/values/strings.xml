@@ -13,6 +13,18 @@
     <string name="menu_saved_messages">Saved messages</string>
     <string name="menu_profile">My Profile</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_ui_elements">UiElements</string>
 
     <string name="title_friends_list">Friends</string>
+
+    <string name="button_text">Simple Button</string>
+    <string name="button_default_content_desc">Default content description</string>
+    <string name="radio_visible">VISIBLE</string>
+    <string name="radio_invisible">INVISIBLE</string>
+    <string name="radio_gone">GONE</string>
+    <string name="checkbox_enable">Enable button</string>
+    <string name="checkbox_clickable">Clickable button</string>
+    <string name="checkbox_selected">Selected button</string>
+    <string name="checkbox_focusable">Focusable button</string>
+    <string name="checkbox_js_enabled">WebView Javascript enabled</string>
 </resources>

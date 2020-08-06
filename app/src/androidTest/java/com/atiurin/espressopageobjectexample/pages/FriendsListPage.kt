@@ -3,7 +3,10 @@ package com.atiurin.espressopageobjectexample.pages
 import android.view.View
 import androidx.core.view.size
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.espresso.Espresso.onData
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.*
+import com.atiurin.espressopageobject.extensions.click
 import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
@@ -16,7 +19,7 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Assert
 
 class FriendsListPage : Page {
-    private val friendsList = withId(R.id.recycler_friends)//withTagValue(`is`(Tags.CONTACTS_LIST))
+    private val friendsList = withId(R.id.recycler_friends)//withTagValue(`is`(Tags.CONTACTS_LIST)))
 
     override fun assertPageDisplayed() = apply {
         step("Assert friends list page displayed") {
@@ -27,6 +30,7 @@ class FriendsListPage : Page {
     class FriendRecyclerItem(list: Matcher<View>, item: Matcher<View>, autoScroll: Boolean = true) :
         RecyclerViewItem(list, item, autoScroll) {
         val name = getChildMatcher(withId(R.id.tv_name))
+//        val adapter = getChildMatcher(withText("asd"))).click {  }
         val status = getChildMatcher(withId(R.id.tv_status))
     }
 

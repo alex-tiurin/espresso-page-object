@@ -1,35 +1,25 @@
 package com.atiurin.espressopageobject.listeners
 
-import com.atiurin.espressopageobject.core.Description
-import com.atiurin.espressopageobject.core.OperationType
-import com.atiurin.espressopageobject.core.action.ActionType
-import com.atiurin.espressopageobject.core.assertion.AssertionType
+import com.atiurin.espressopageobject.core.common.Operation
+import com.atiurin.espressopageobject.core.common.OperationResult
 
 internal interface LifecycleListener{
     /**
      * executed before any action or assertion
      */
-    fun before(description: Description)
+    fun before(operation: Operation)
     /**
      * called when action or assertion has been executed successfully
      */
-    fun afterSuccess(description: Description)
+    fun afterSuccess(operationResult: OperationResult)
 
     /**
      * called when action or assertion failed
      */
-    fun afterFailure(description: Description, throwable: Throwable)
+    fun afterFailure(operationResult: OperationResult)
 
     /**
      * called in any case of action or assertion result
      */
-    fun after(description: Description)
-
-    fun doInCase(type: OperationType, caseAction: () -> Unit, caseAssertion: () -> Unit) {
-        if (type is ActionType) {
-            caseAction()
-        } else if (type is AssertionType) {
-            caseAssertion()
-        }
-    }
+    fun after(operationResult: OperationResult)
 }

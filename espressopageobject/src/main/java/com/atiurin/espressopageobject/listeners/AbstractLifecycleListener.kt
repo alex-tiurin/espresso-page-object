@@ -1,6 +1,7 @@
 package com.atiurin.espressopageobject.listeners
 
-import com.atiurin.espressopageobject.core.Description
+import com.atiurin.espressopageobject.core.common.Operation
+import com.atiurin.espressopageobject.core.common.OperationResult
 
 abstract class AbstractLifecycleListener : LifecycleListener{
     var id: String
@@ -11,15 +12,11 @@ abstract class AbstractLifecycleListener : LifecycleListener{
         this.id = this::class.java.name
     }
 
-    override fun before(description: Description) {
-    }
+    override fun after(operationResult: OperationResult) = Unit
 
-    override fun afterSuccess(description: Description) {
-    }
+    override fun afterFailure(operationResult: OperationResult) = Unit
 
-    override fun afterFailure(description: Description, throwable: Throwable) {
-    }
+    override fun afterSuccess(operationResult: OperationResult) = Unit
 
-    override fun after(description: Description) {
-    }
+    override fun before(operation: Operation) = Unit
 }

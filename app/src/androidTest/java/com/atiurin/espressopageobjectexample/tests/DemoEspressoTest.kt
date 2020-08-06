@@ -59,8 +59,6 @@ class DemoEspressoTest : BaseTest() {
             .sendMessage(firstMessage)
             .sendMessage(secondMessage)
             .assertMessageTextAtPosition(0, firstMessage)
-            .assertMessageTextAtPosition(1, secondMessage)
-
     }
 
 

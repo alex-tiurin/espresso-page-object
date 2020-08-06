@@ -22,16 +22,21 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
 
     open fun atItem(itemMatcher: Matcher<View>): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description?) {
+
+            override fun describeMismatchSafely(item: View?, mismatchDescription: Description) {
                 if (recyclerView == null) {
-                    description?.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
+                    mismatchDescription.appendText("No matching RecyclerView with : [$recyclerViewMatcher]. ")
                     return
                 }
-                description?.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
+                mismatchDescription.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
                 if (itemView == null) {
-                    description?.appendText("No matching recycler view item with : [$itemMatcher]")
+                    mismatchDescription.appendText("No matching recycler view item with : [$itemMatcher]")
                     return
                 }
+//                super.describeMismatchSafely(item, mismatchDescription)
+            }
+            override fun describeTo(description: Description) {
+                description.appendText("RecyclerViewItem recyclerViewMatcher: '$recyclerViewMatcher', itemMatcher: '$itemMatcher'")
             }
 
             override fun matchesSafely(view: View?): Boolean {
@@ -46,21 +51,29 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
     open fun atItemChild(itemMatcher: Matcher<View>, childMatcher: Matcher<View>): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             var childView: View? = null
-            override fun describeTo(description: Description?) {
+
+
+            override fun describeTo(description: Description) {
+                description.appendText("RecyclerViewItem recyclerViewMatcher: '$recyclerViewMatcher', itemMatcher: '$itemMatcher', childMatcher: '$childMatcher'")
+                return
+            }
+
+            override fun describeMismatchSafely(item: View?, mismatchDescription: Description) {
                 if (recyclerView == null) {
-                    description?.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
+                    mismatchDescription.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
                     return
                 }
-                description?.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
+                mismatchDescription.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
                 if (itemView == null) {
-                    description?.appendText("No matching recycler view item with : [$itemMatcher]")
+                    mismatchDescription.appendText("No matching recycler view item with : [$itemMatcher]")
                     return
                 }
-                description?.appendText("Found recycler view item matches : [$itemMatcher]. ")
+                mismatchDescription.appendText("Found recycler view item matches : [$itemMatcher]. ")
                 if (childView == null) {
-                    description?.appendText("No matching item child view with : [$childMatcher]")
+                    mismatchDescription.appendText("No matching item child view with : [$childMatcher]")
                     return
                 }
+//                super.describeMismatchSafely(item, mismatchDescription)
             }
 
             override fun matchesSafely(view: View?): Boolean {
@@ -84,16 +97,21 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
 
     open fun atPosition(position: Int): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description?) {
+            override fun describeTo(description: Description) {
+                description.appendText("RecyclerViewItem recyclerViewMatcher: '$recyclerViewMatcher', itemPosition: '$position'")
+            }
+
+            override fun describeMismatchSafely(item: View?, mismatchDescription: Description) {
                 if (recyclerView == null) {
-                    description?.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
+                    mismatchDescription.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
                     return
                 }
-                description?.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
+                mismatchDescription.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
                 if (itemView == null) {
-                    description?.appendText("No recycler view item at position : [$position]")
+                    mismatchDescription.appendText("No recycler view item at position : [$position]")
                     return
                 }
+                super.describeMismatchSafely(item, mismatchDescription)
             }
 
             override fun matchesSafely(view: View?): Boolean {
@@ -108,23 +126,27 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
     open fun atPositionItemChild(position: Int, childMatcher: Matcher<View>): Matcher<View> {
         return object : TypeSafeMatcher<View>() {
             var childView: View? = null
-            override fun describeTo(description: Description?) {
-                if (recyclerView == null) {
-                    description?.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
-                    return
-                }
-                description?.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
-                if (itemView == null) {
-                    description?.appendText("No recycler view item at position : [$position]")
-                    return
-                }
-                description?.appendText("Found recycler view item at position : [$position]. ")
-                if (childView == null) {
-                    description?.appendText("No matching item child view with : [$childMatcher]")
-                    return
-                }
+            override fun describeTo(description: Description) {
+                description.appendText("RecyclerViewItem recyclerViewMatcher: '$recyclerViewMatcher', itemPosition: '$position', childMatcher: '$childMatcher'")
             }
 
+            override fun describeMismatchSafely(item: View?, mismatchDescription: Description) {
+                if (recyclerView == null) {
+                    mismatchDescription.appendText("No matching recycler view with : [$recyclerViewMatcher]. ")
+                    return
+                }
+                mismatchDescription.appendText("Found recycler view matches : [$recyclerViewMatcher]. ")
+                if (itemView == null) {
+                    mismatchDescription.appendText("No recycler view item at position : [$position]")
+                    return
+                }
+                mismatchDescription.appendText("Found recycler view item at position : [$position]. ")
+                if (childView == null) {
+                    mismatchDescription.appendText("No matching item child view with : [$childMatcher]")
+                    return
+                }
+                super.describeMismatchSafely(item, mismatchDescription)
+            }
             override fun matchesSafely(view: View?): Boolean {
                 if (itemView == null) itemView = findItemViewAtPosition(position, view?.rootView)
                 if (itemView != null) {

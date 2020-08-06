@@ -1,0 +1,5 @@
+package com.atiurin.espressopageobject.core.espresso.resultanalyzer
+
+import com.atiurin.espressopageobject.core.common.OperationResultAnalyzer
+
+interface EspressoOperationResultAnalyzer : OperationResultAnalyzer

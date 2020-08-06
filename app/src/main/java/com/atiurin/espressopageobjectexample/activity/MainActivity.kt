@@ -124,6 +124,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(applicationContext, LoginActivity::class.java)
                 startActivity(intent)
             }
+            R.id.ui_elements -> {
+                val intent = Intent(applicationContext, UiElementsActivity::class.java)
+                startActivity(intent)
+            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
