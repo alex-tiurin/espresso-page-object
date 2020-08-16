@@ -1,0 +1,34 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  run_tests_on_api_23:
+    runs-on: macos-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: run ui tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 23
+        script: ./gradlew :app:connectedCheck --stacktrace
+        profile: Nexus 6
+        
+  run_tests_on_api_24:
+    runs-on: macos-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: run ui tests
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 24
+        script: ./gradlew :app:connectedCheck --stacktrace
+        profile: Nexus 6
