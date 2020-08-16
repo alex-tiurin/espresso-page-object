@@ -60,10 +60,4 @@ class DemoEspressoTest : BaseTest() {
             .sendMessage(secondMessage)
             .assertMessageTextAtPosition(0, firstMessage)
     }
-
-
-    @Test
-    fun testListSize(){
-        FriendsListPage().assertFriendsListSize(CONTACTS.size)
-    }
 }

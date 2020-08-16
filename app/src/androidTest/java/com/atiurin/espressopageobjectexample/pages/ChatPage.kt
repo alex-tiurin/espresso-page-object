@@ -1,7 +1,6 @@
 package com.atiurin.espressopageobjectexample.pages
 
 import android.view.View
-import androidx.core.view.size
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -29,7 +28,7 @@ class ChatPage : Page {
     val inputMessageText = withId(R.id.message_input_text)
     val sendMessageBtn = withId(R.id.send_button)
 
-    fun getListItem(text: String): ChatRecyclerItem {
+    fun getMessageListItem(text: String): ChatRecyclerItem {
         return ChatRecyclerItem(
             messagesList,
             ViewMatchers.hasDescendant(
@@ -60,7 +59,7 @@ class ChatPage : Page {
         step("Send message with text '$text") {
             inputMessageText.typeText(text)
             sendMessageBtn.click()
-            this.getListItem(text).text
+            this.getMessageListItem(text).text
                 .isDisplayed()
                 .hasText(text)
         }
@@ -79,7 +78,7 @@ class ChatPage : Page {
     }
 
     fun assertMessageDisplayed(text: String) {
-        getListItem(text).text
+        getMessageListItem(text).text
             .isDisplayed()
             .hasText(text)
     }

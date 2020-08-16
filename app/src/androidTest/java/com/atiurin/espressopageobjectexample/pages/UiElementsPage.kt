@@ -5,6 +5,7 @@ import com.atiurin.espressopageobjectexample.R
 
 class UiElementsPage {
     val button = withId(R.id.button1)
+    val eventStatus = withId(R.id.last_event_status)
     val radioVisibleButton = withId(R.id.radio_visible)
     val radioInvisibleButton = withId(R.id.radio_invisible)
     val radioGoneButton = withId(R.id.radio_gone)

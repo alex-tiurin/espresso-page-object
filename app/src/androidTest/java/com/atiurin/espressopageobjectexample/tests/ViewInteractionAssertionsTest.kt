@@ -1,25 +1,17 @@
 package com.atiurin.espressopageobjectexample.tests
 
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.rule.ActivityTestRule
 import com.atiurin.espressopageobject.extensions.*
 import com.atiurin.espressopageobjectexample.R
-import com.atiurin.espressopageobjectexample.activity.UiElementsActivity
-import com.atiurin.espressopageobjectexample.framework.utils.AssetUtils
+import com.atiurin.espressopageobjectexample.framework.Log
+import com.atiurin.espressopageobjectexample.framework.utils.AssertUtils
 import com.atiurin.espressopageobjectexample.framework.utils.TestDataUtils.getResourceString
-import com.atiurin.espressopageobjectexample.pages.UiElementsPage
-import org.hamcrest.Matchers.*
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers.containsString
+import org.junit.Assert
 import org.junit.Test
 
-class UiElementsTestAssertions : BaseTest() {
-    val activityRule = ActivityTestRule(UiElementsActivity::class.java)
-
-    init {
-        ruleSequence.add(activityRule)
-    }
-
-    val page = UiElementsPage()
-
+class ViewInteractionAssertionsTest : UiElementsTest() {
     //displayed
     @Test
     fun isDisplayed_ofDisplayedObject() {
@@ -29,13 +21,13 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun isDisplayed_ofNotDisplayedObject() {
         page.radioInvisibleButton.click()
-        AssetUtils.assertException { page.button.isDisplayed(1000) }
+        AssertUtils.assertException { page.button.isDisplayed(1000) }
     }
 
     @Test
     fun isNotDisplayed_ofDisplayedObject() {
         page.radioVisibleButton.click()
-        AssetUtils.assertException { page.button.isNotDisplayed(1000) }
+        AssertUtils.assertException { page.button.isNotDisplayed(1000) }
     }
 
     @Test
@@ -43,6 +35,8 @@ class UiElementsTestAssertions : BaseTest() {
         page.radioInvisibleButton.click()
         page.button.isNotDisplayed()
     }
+
+
     //checked
     @Test
     fun isChecked_ofChecked() {
@@ -51,12 +45,12 @@ class UiElementsTestAssertions : BaseTest() {
 
     @Test
     fun isChecked_ofNotChecked() {
-        AssetUtils.assertException { page.checkBoxSelected.isChecked(1000) }
+        AssertUtils.assertException { page.checkBoxSelected.isChecked(1000) }
     }
 
     @Test
     fun isNotChecked_ofChecked() {
-        AssetUtils.assertException { page.checkBoxClickable.isNotChecked(1000) }
+        AssertUtils.assertException { page.checkBoxClickable.isNotChecked(1000) }
     }
 
     @Test
@@ -72,13 +66,13 @@ class UiElementsTestAssertions : BaseTest() {
 
     @Test
     fun isSelected_ofNotSelected() {
-        AssetUtils.assertException { page.button.isSelected(1000) }
+        AssertUtils.assertException { page.button.isSelected(1000) }
     }
 
     @Test
     fun isNotSelected_ofSelected() {
         page.checkBoxSelected.click()
-        AssetUtils.assertException { page.button.isNotSelected(1000) }
+        AssertUtils.assertException { page.button.isNotSelected(1000) }
     }
 
     @Test
@@ -94,12 +88,12 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun isEnabled_ofNotEnabled() {
         page.checkBoxEnabled.click()
-        AssetUtils.assertException { page.button.isEnabled(1000) }
+        AssertUtils.assertException { page.button.isEnabled(1000) }
     }
 
     @Test
     fun isNotEnabled_ofEnabled() {
-        AssetUtils.assertException { page.button.isNotEnabled(1000) }
+        AssertUtils.assertException { page.button.isNotEnabled(1000) }
     }
 
     @Test
@@ -116,12 +110,12 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun isClickable_ofNotClickable() {
         page.checkBoxClickable.click()
-        AssetUtils.assertException { page.button.isClickable(1000) }
+        AssertUtils.assertException { page.button.isClickable(1000) }
     }
 
     @Test
     fun isNotClickable_ofClickable() {
-        AssetUtils.assertException { page.button.isNotClickable(1000) }
+        AssertUtils.assertException { page.button.isNotClickable(1000) }
     }
 
     @Test
@@ -138,12 +132,12 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun isFocusable_ofNotFocusable() {
         page.checkBoxFocusable.click()
-        AssetUtils.assertException { page.button.isFocusable(1000) }
+        AssertUtils.assertException { page.button.isFocusable(1000) }
     }
 
     @Test
     fun isNotFocusable_ofFocusable() {
-        AssetUtils.assertException {  page.button.isNotFocusable(1000) }
+        AssertUtils.assertException {  page.button.isNotFocusable(1000) }
     }
 
     @Test
@@ -160,7 +154,7 @@ class UiElementsTestAssertions : BaseTest() {
 
     @Test
     fun hasFocus_ofNotFocused() {
-        AssetUtils.assertException { page.editTextContentDesc.hasFocus(1000) }
+        AssertUtils.assertException { page.editTextContentDesc.hasFocus(1000) }
     }
     //hasText
     @Test
@@ -171,12 +165,12 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun hasText_InvalidSubstringText(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.editTextContentDesc.hasText(text.substring(3), 1000) }
+        AssertUtils.assertException { page.editTextContentDesc.hasText(text.substring(3), 1000) }
     }
 
     @Test
     fun hasText_InvalidText_withResourceId(){
-        AssetUtils.assertException { page.editTextContentDesc.hasText(R.string.action_clear_history, 1000) }
+        AssertUtils.assertException { page.editTextContentDesc.hasText(R.string.action_clear_history, 1000) }
     }
 
     @Test
@@ -188,7 +182,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun hasText_InvalidText_withString(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.editTextContentDesc.hasText("$text to be invalid", 1000) }
+        AssertUtils.assertException { page.editTextContentDesc.hasText("$text to be invalid", 1000) }
     }
 
     @Test
@@ -200,7 +194,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun hasText_InvalidText_withStringMatcher(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.editTextContentDesc.hasText(containsString("$text to be invalid"), 1000) }
+        AssertUtils.assertException { page.editTextContentDesc.hasText(containsString("$text to be invalid"), 1000) }
     }
     //containsText
     @Test
@@ -212,7 +206,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun containsText_InvalidSubstringText(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.editTextContentDesc.containsText("${text.substring(3)} to be invalid", 1000) }
+        AssertUtils.assertException { page.editTextContentDesc.containsText("${text.substring(3)} to be invalid", 1000) }
     }
 
     //hasContentDescription
@@ -224,12 +218,12 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun hasContentDescription_InvalidSubstringText(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.button.hasContentDescription(text.substring(3), 1000) }
+        AssertUtils.assertException { page.button.hasContentDescription(text.substring(3), 1000) }
     }
 
     @Test
     fun hasContentDescription_InvalidText_withResourceId(){
-        AssetUtils.assertException { page.button.hasContentDescription(R.string.action_clear_history, 1000) }
+        AssertUtils.assertException { page.button.hasContentDescription(R.string.action_clear_history, 1000) }
     }
 
     @Test
@@ -241,7 +235,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun hasContentDescription_InvalidText_withString(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.button.hasContentDescription("$text to be invalid", 1000) }
+        AssertUtils.assertException { page.button.hasContentDescription("$text to be invalid", 1000) }
     }
 
     //contentDescriptionContains
@@ -253,7 +247,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun contentDescriptionContains_InvalidText_withString(){
         val text = getResourceString(R.string.button_default_content_desc)
-        AssetUtils.assertException { page.button.contentDescriptionContains("${text.substring(2)} to be invalid", 1000) }
+        AssertUtils.assertException { page.button.contentDescriptionContains("${text.substring(2)} to be invalid", 1000) }
     }
 
     //assertMatches
@@ -265,7 +259,7 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun assertMatches_ofNotMatched(){
         page.checkBoxEnabled.click()
-        AssetUtils.assertException { page.button.assertMatches(allOf(isDisplayed(), isEnabled(), withText(R.string.button_text)), 1000) }
+        AssertUtils.assertException { page.button.assertMatches(allOf(isDisplayed(), isEnabled(), withText(R.string.button_text)), 1000) }
     }
 
     //javascripEnabled
@@ -277,6 +271,19 @@ class UiElementsTestAssertions : BaseTest() {
     @Test
     fun jsEnabled_ofNotEnabled(){
         page.checkBoxJsEnabled.click()
-        AssetUtils.assertException { page.webView.isJavascriptEnabled(1000) }
+        AssertUtils.assertException { page.webView.isJavascriptEnabled(1000) }
+    }
+    //isSuccess
+
+    @Test
+    fun isSuccess_FalseTest(){
+        val success = page.button.isSuccess { isNotDisplayed(1000) }
+        Assert.assertFalse(success)
+    }
+
+    @Test
+    fun isSuccess_TrueTest(){
+        val success = page.button.isSuccess { isDisplayed(1000) }
+        Assert.assertTrue(success)
     }
 }

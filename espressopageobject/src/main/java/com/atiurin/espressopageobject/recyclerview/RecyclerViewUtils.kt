@@ -75,7 +75,3 @@ internal fun <VH : RecyclerView.ViewHolder> viewHolderMatcher(
         }
     }
 }
-
-fun withRecyclerView(recyclerViewMatcher: Matcher<View>): RecyclerViewItemMatcher {
-    return RecyclerViewItemMatcher(recyclerViewMatcher)
-}

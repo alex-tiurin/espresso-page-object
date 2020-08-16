@@ -59,7 +59,8 @@ fun Matcher<View>.clearText(
 }
 
 fun Matcher<View>.pressKey(
-    keyCode: Int, timeoutMs: Long = ViewActionConfig.ACTION_TIMEOUT,
+    keyCode: Int,
+    timeoutMs: Long = ViewActionConfig.ACTION_TIMEOUT,
     resultHandler: (EspressoOperationResult) -> Unit = ViewActionConfig.defaultResultHandler
 ) = apply {
     onView(this).pressKey(keyCode, timeoutMs, resultHandler)

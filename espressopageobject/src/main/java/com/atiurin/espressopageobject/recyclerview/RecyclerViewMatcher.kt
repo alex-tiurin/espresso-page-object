@@ -1,22 +1,15 @@
 package com.atiurin.espressopageobject.recyclerview
 
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.internal.inject.InstrumentationContext
 import androidx.test.espresso.matcher.BoundedMatcher
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.espresso.util.TreeIterables
-import androidx.test.platform.app.InstrumentationRegistry
 import com.atiurin.espressopageobject.extensions.assertMatches
-import com.atiurin.espressopageobject.extensions.execute
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.any
-import org.hamcrest.Matchers.not
 import org.hamcrest.TypeSafeMatcher
 
-open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
+open class RecyclerViewMatcher(val recyclerViewMatcher: Matcher<View>) {
     private var recyclerView: RecyclerView? = null
     var itemView: View? = null
 
@@ -218,4 +211,8 @@ open class RecyclerViewItemMatcher(val recyclerViewMatcher: Matcher<View>) {
         val count = getRecyclerViewList()?.adapter?.itemCount
         return count ?: 0
     }
+}
+
+fun withRecyclerView(recyclerViewMatcher: Matcher<View>): RecyclerViewMatcher {
+    return RecyclerViewMatcher(recyclerViewMatcher)
 }

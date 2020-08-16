@@ -11,6 +11,11 @@
             android:contentDescription="@string/button_default_content_desc"
             android:text="@string/button_text" />
 
+    <TextView
+            android:id="@+id/last_event_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_text"/>
     <RadioGroup
             android:id="@+id/radio_group_visibility"
             android:layout_width="match_parent"
