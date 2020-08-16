@@ -7,18 +7,6 @@ on:
     branches: [ master ]
 
 jobs:
-  run_tests_on_api_26:
-    runs-on: macos-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v2
-
-    - name: run ui tests
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 26
-        script: ./gradlew :app:connectedCheck --stacktrace
-        profile: Nexus 6
         
   run_tests_on_api_27:
     runs-on: macos-latest
