@@ -7,11 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-  run_tests_on_api_21:
+  run_tests:
     runs-on: macos-latest
     strategy:
       matrix: 
-        api_level: [21, 22, 23, 24, 25, 26, 27, 28, 29]
+        api_level: [23, 24]
     steps:
     - name: checkout
       uses: actions/checkout@v2
