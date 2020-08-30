@@ -55,7 +55,7 @@ withRecyclerView(withId(R.id.recycler_friends))
 
 ## Features
 
--  [How to interact with RecyclerView](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/en/adapterview.md)
+-  [How to interact with RecyclerView](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/en/recyclerview.md)
 -  [AdapterView and onData](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/en/adapterview.md)
 -  [How we reduce flakiness of all actions and assertions](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/en/operations_stability.md)
 -  [Lifecycle listener. Listen all operations and their results.](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/en/lifecycle_listener.md)
@@ -134,7 +134,7 @@ In general, it all comes down to the fact that the architecture of your project 
 
 ![Architecture](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/img/architecture.png)
 
-## Add ot you project
+## Add to your project
 Gradle
 ```groovy
 repositories {
