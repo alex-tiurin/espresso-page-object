@@ -8,7 +8,7 @@ class GetContacts : UseCase<ArrayList<Contact>, UseCase.None>() {
 
     override suspend fun run(params: None): Either<Exception, ArrayList<Contact>> {
         return try {
-            delay(1000)
+            delay(500)
             val contacts = CONTACTS
             Success(contacts)
         } catch (e: Exception) {

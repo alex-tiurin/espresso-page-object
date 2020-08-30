@@ -4,7 +4,6 @@ import androidx.test.rule.ActivityTestRule
 import com.atiurin.espressopageobject.testlifecycle.setupteardown.SetUp
 import com.atiurin.espressopageobject.testlifecycle.setupteardown.TearDown
 import com.atiurin.espressopageobjectexample.activity.MainActivity
-import com.atiurin.espressopageobjectexample.data.repositories.CONTACTS
 import com.atiurin.espressopageobjectexample.framework.Log
 import com.atiurin.espressopageobjectexample.pages.ChatPage
 import com.atiurin.espressopageobjectexample.pages.FriendsListPage

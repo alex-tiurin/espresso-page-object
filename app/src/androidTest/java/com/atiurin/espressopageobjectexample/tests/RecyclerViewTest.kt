@@ -5,7 +5,7 @@ import androidx.test.rule.ActivityTestRule
 import com.atiurin.espressopageobject.extensions.assertMatches
 import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
-import com.atiurin.espressopageobject.extensions.scrollTo
+import com.atiurin.espressopageobject.extensions.isEnabled
 import com.atiurin.espressopageobject.recyclerview.withRecyclerView
 import com.atiurin.espressopageobjectexample.activity.MainActivity
 import com.atiurin.espressopageobjectexample.data.repositories.CONTACTS
@@ -45,9 +45,19 @@ class RecyclerViewTest : BaseTest() {
     @Test
     fun scrollToItemTest(){
         val contact = CONTACTS[CONTACTS.size - 1]
-        val item = page.getListItem(contact.name)
+        val item = page.getFriendsListItem(contact.name)
         item.isDisplayed()
         item.name.hasText(contact.name)
         item.status.hasText(contact.status)
+    }
+
+    @Test
+    fun recyclerViewItemClassTest(){
+        val contact = CONTACTS[1]
+        with(page.getFriendsListItem(contact.name)){
+            this.isDisplayed().isClickable()
+            this.name.isDisplayed().isEnabled().hasText(contact.name)
+            this.status.isDisplayed().isEnabled().hasText(contact.status)
+        }
     }
 }
