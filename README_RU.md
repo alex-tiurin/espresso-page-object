@@ -2,7 +2,7 @@
 
 [![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
 
-[![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/Android CI/badge.svg)](https://github.com/alex-tiurin/espresso-page-object/actions)
+![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/Android CI/badge.svg)
 
 Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
 Вам не нужно запоминать новые классы, изучать новый синтаксис. Все действия у вас появляются из коробки.
