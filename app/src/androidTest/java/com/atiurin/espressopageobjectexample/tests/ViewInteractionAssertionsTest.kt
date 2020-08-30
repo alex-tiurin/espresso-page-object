@@ -262,7 +262,7 @@ class ViewInteractionAssertionsTest : UiElementsTest() {
         AssertUtils.assertException { page.button.assertMatches(allOf(isDisplayed(), isEnabled(), withText(R.string.button_text)), 1000) }
     }
 
-    //javascripEnabled
+    //javascriptEnabled
     @Test
     fun jsEnabled_ofEnabled(){
         page.webView.isJavascriptEnabled()
