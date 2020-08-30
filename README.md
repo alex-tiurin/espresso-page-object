@@ -132,7 +132,7 @@ Use RuleSequence + SetUpTearDownRule to prepare test data.
 
 In general, it all comes down to the fact that the architecture of your project will look like this.
 
-! [Architecture] (https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/img/architecture.png)
+![Architecture](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/img/architecture.png)
 
 ## Add ot you project
 Gradle
