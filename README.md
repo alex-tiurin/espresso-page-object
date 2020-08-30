@@ -2,7 +2,7 @@
 
 [![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
 
-[![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/android-pipeline/badge.svg)](https://github.com/alex-tiurin/espresso-page-object/actions)
+[![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/Android CI/badge.svg)](https://github.com/alex-tiurin/espresso-page-object/actions)
 
 This library provides access to nice and simple DSL for Espresso framework.
 You don't need to learn any new classes or special syntax. All magic actions and assertions are provided from crunch.
