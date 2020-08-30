@@ -2,37 +2,69 @@
 
 [![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
 
+[![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/android-pipeline/badge.svg)](https://github.com/alex-tiurin/espresso-page-object/actions)
+
 Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
 Вам не нужно запоминать новые классы, изучать новый синтаксис. Все действия у вас появляются из коробки.
 Для продвинутых пользователей библиотека предоставляет хорошую возможность в кастомизации и расширении возможностей DSL.
 Стабильных Вам тестов!
 
-## Подключение к проекту
-Gradle
-```groovy
-repositories {
-    jcenter()
-}
-    
-dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.16'
-}
+## Что дает подлючение библиотеки?
+
+- Стабильность выполнения всех действий и проверок
+- Архитектурный подход к написанию тестов
+- Простой и понятный синтаксис
+
+Стандартный синтаксис Espresso сложен и не интуитивен в понимании. Особенно это проявляется при взаимодейстивии с RecyclerView
+
+Рассмотрим 2 примера:
+
+1. Обычный клик на кнопку.
+
+Чистый Espresso
+
+```kotlin
+onView(withId(R.id.send_button)).perform(click())
 ```
-Maven
-```
-<dependency>
-  <groupId>com.atiurin.espresso</groupId>
-  <artifactId>espressopageobject</artifactId>
-  <version>0.1.16</version>
-  <type>pom</type>
-</dependency>
+ Espresso page object
+```kotlin
+withId(R.id.send_button).click()
 ```
 
-## AndroidX
+2. Клик на элемент списка RecyclerView
 
-Необходимо, чтобы ваш проект использовал AndroidX библиотеки. С android support могут возникнуть проблемы.
+Чистый Espresso
+
+```kotlin
+onView(withId(R.id.recycler_friends))
+    .perform(
+        RecyclerViewActions
+            .actionOnItem<RecyclerView.ViewHolder>(
+                hasDescendant(withText("Janice")),
+                click()
+            )
+        )
+```
+ Espresso page object
+```kotlin
+withRecyclerView(withId(R.id.recycler_friends))
+    .atItem(hasDescendant(withText("Janice")))
+    .click()
+```
+
+## Особенности библиотеки
+
+-  [Как взаимодействовать с RecyclerView](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/recyclerview.md)
+-  [AdapterView и onData](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/adapterview.md)
+-  [Как обеспечивается стабильность всех действий и проверок](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/operations_stability.md)
+-  [Lifecycle listener. Прослушиваем все операции и их результаты](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/lifecycle_listener.md)
+-  [RuleSequence + SetUpTearDownRule. Полный контроль над вашими тестами](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/rulesequence_setupterdownrule.md)
 
 ## 3 шага для написания теста с использованием espresso-page-object
+
+Я стараюсь пропогандировать правильное построение архитектуры тествого фреймворка, разделение ответственности между слоями и прочие правильные штуки.
+
+Поэтому рекомендую использовать следующий подход при использовании библиотеки.
 
 1. Создайте PageObject class и определите `Matcher<View>` UI элементов экрана в нем
 
@@ -94,13 +126,36 @@ class ChatPage {
 
 См. полный код с примером теста [DemoEspressoTest](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/src/androidTest/java/com/atiurin/espressopageobjectexample/tests/DemoEspressoTest.kt)
 
-## Особенности библиотеки
+Для подготовки тестовых данных используйте RuleSequence + SetUpTearDownRule.
 
--  [Как взаимодействовать с RecyclerView](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/recyclerview.md)
--  [AdapterView и onData](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/adapterview.md)
--  [Как обеспечивается стабильность всех действий и проверок](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/operations_stability.md)
--  [Lifecycle listener. Прослушиваем все операции и их результаты](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/lifecycle_listener.md)
--  [RuleSequence + SetUpTearDownRule. Полный контроль над вашими тестами](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/ru/rulesequence_setupterdownrule.md)
+В целом все сводится к тому, что архитектура вашего проекта будет выглядеть следующим образом.
+
+![Architecture](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/img/architecture.png)
+
+## Подключение к проекту
+Gradle
+```groovy
+repositories {
+    jcenter()
+}
+
+dependencies {
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.16'
+}
+```
+Maven
+```
+<dependency>
+  <groupId>com.atiurin.espresso</groupId>
+  <artifactId>espressopageobject</artifactId>
+  <version>0.1.16</version>
+  <type>pom</type>
+</dependency>
+```
+
+## AndroidX
+
+Необходимо, чтобы ваш проект использовал AndroidX библиотеки. С android support могут возникнуть проблемы.
 
 
 
