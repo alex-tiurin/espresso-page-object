@@ -29,7 +29,7 @@ ext {
     siteUrl = 'https://github.com/alex-tiurin/espresso-page-object'
     gitUrl = 'https://github.com/alex-tiurin/espresso-page-object.git'
 
-    libraryVersion = '0.1.16'
+    libraryVersion = '0.1.17'
 
     developerId = 'alex-tiurin'
     developerName = 'Aleksei Tiurin'
@@ -47,7 +47,7 @@ ext.versions = [
         'buildTools'    : '29.0.3',
 
         'release'       : libraryVersion,
-        'code'          : 16,
+        'code'          : 17,
 ]
 
 android {
@@ -125,8 +125,9 @@ task sourcesJar(type: Jar) {
 }
 
 task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

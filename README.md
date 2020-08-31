@@ -162,7 +162,7 @@ repositories {
 }
 
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.16'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.17'
 }
 ```
 Maven
@@ -170,10 +170,13 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.16</version>
+  <version>0.1.17</version>
   <type>pom</type>
 </dependency>
 ```
+
+Version 0.1.17 has a new internal structure and you need to make minor changes in your project to migrate on it.
+Read more info [Migration to 0.1.17](https://github.com/alex-tiurin/espresso-page-object/wiki/Migration-to-0.1.17)
 
 ## AndroidX
 

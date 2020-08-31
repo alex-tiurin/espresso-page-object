@@ -152,7 +152,9 @@ Maven
   <type>pom</type>
 </dependency>
 ```
+Версия 0.1.17 имеет новую внутренную структуру классов, поэтому для миграции на нее необходимо поддержать пару незначительных изменений в вашем проекте.
 
+Подробности об этом - [Migration to 0.1.17](https://github.com/alex-tiurin/espresso-page-object/wiki/Migration-to-0.1.17)
 ## AndroidX
 
 Необходимо, чтобы ваш проект использовал AndroidX библиотеки. С android support могут возникнуть проблемы.
