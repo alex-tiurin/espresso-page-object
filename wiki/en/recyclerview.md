@@ -4,7 +4,7 @@ Before we go forward we need to define some terms:
 - RecyclerViewItem - single item of RecyclerView list (there is a class RecyclerViewItem in espresso-page-object lib)
 - RecyclerItemChild - child element of RecyclerViewItem (just a term, there is no special class to work with child elements)
 
-![RecyclerViewItem](https://github.com/alex-tiurin/espresso-page-object/blob/master/app/img/recyclerViewItem.png)
+![RecyclerViewItem](https://github.com/alex-tiurin/espresso-page-object/blob/master/wiki/img/recyclerViewItem.png)
 
 In case you don't need to work with RecyclerItemChild you just need to create a method that returns RecyclerViewItem instance.
 
