@@ -16,4 +16,5 @@ class UiElementsPage {
     val checkBoxJsEnabled = withId(R.id.checkbox_js_enabled)
     val editTextContentDesc = withId(R.id.et_contentDesc)
     val webView = withId(R.id.webview)
+    val appCompatTextView = withId(R.id.app_compat_text)
 }

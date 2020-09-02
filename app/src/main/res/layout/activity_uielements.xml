@@ -89,4 +89,11 @@
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="@string/checkbox_js_enabled" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/app_compat_text"
+            android:layout_margin="10dp"
+            android:text="@string/app_compat_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

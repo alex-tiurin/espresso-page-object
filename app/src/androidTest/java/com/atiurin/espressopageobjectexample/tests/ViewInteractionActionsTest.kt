@@ -8,6 +8,7 @@ import com.atiurin.espressopageobject.extensions.*
 import com.atiurin.espressopageobjectexample.R
 import com.atiurin.espressopageobjectexample.framework.utils.AssertUtils
 import com.atiurin.espressopageobjectexample.framework.utils.TestDataUtils.getResourceString
+import org.junit.Assert
 import org.junit.Test
 
 class ViewInteractionActionsTest : UiElementsTest() {
@@ -26,9 +27,12 @@ class ViewInteractionActionsTest : UiElementsTest() {
     @Test
     fun doubleClick_onClickable() {
         page.button.doubleClick()
-        page.eventStatus
-            .containsText(getResourceString(R.string.button_event_click))
-            .containsText("2")
+        var success = false
+        with(page.eventStatus){
+            containsText(getResourceString(R.string.button_event_click))
+            success = isSuccess { containsText("1", 3000) } ||  isSuccess { containsText("2", 3000) }
+        }
+        Assert.assertTrue(success)
     }
 
     @Test

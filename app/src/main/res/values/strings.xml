@@ -31,4 +31,7 @@
     <string name="button_event_click">Click</string>
     <string name="button_event_long_click">Long Click</string>
     <string name="button_event_double_click">Double Click</string>
+
+    <string name="app_compat_text">Default AppCompatTextView</string>
+
 </resources>

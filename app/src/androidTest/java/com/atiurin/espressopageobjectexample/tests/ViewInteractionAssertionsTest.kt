@@ -286,4 +286,11 @@ class ViewInteractionAssertionsTest : UiElementsTest() {
         val success = page.button.isSuccess { isDisplayed(1000) }
         Assert.assertTrue(success)
     }
+
+    // withAppCompatTextView
+
+    @Test
+    fun appCompatTextView_assertText(){
+        page.appCompatTextView.hasText("Default AppCompatTextView")
+    }
 }
