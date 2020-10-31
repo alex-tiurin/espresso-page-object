@@ -17,4 +17,6 @@ class UiElementsPage {
     val editTextContentDesc = withId(R.id.et_contentDesc)
     val webView = withId(R.id.webview)
     val appCompatTextView = withId(R.id.app_compat_text)
+    val imageView = withId(R.id.image_view)
+    val emptyImageView = withId(R.id.empty_image_view)
 }

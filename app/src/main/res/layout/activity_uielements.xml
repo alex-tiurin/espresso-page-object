@@ -96,4 +96,18 @@
             android:text="@string/app_compat_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_view"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_account" />
+
+    <ImageView
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:id="@+id/empty_image_view"
+            android:layout_margin="10dp"
+            android:background="@color/colorAccent" />
 </LinearLayout>
