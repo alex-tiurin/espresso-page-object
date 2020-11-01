@@ -1,7 +1,6 @@
 # Espresso page object
 
 [![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
-
 ![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/AndroidCI/badge.svg)
 
 This library provides access to nice and simple DSL for **Espresso** framework. It allows you to write simple and stable UI tests for Android application.
@@ -162,7 +161,7 @@ repositories {
 }
 
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.17'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.18'
 }
 ```
 Maven
@@ -170,7 +169,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.17</version>
+  <version>0.1.18</version>
   <type>pom</type>
 </dependency>
 ```

@@ -1,7 +1,6 @@
 # Espresso page object
 
 [![Download](https://api.bintray.com/packages/alex-tiurin/espresso-page-object/espressopageobject/images/download.svg)](https://bintray.com/alex-tiurin/espresso-page-object/espressopageobject/_latestVersion)
-
 ![Android CI](https://github.com/alex-tiurin/espresso-page-object/workflows/AndroidCI/badge.svg)
 
 Это библиотека, предоставляющая доступ к простому и понятному  DSL для работы с Espresso фреймворком.
@@ -140,7 +139,7 @@ repositories {
 }
 
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.16'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.18'
 }
 ```
 Maven
@@ -148,7 +147,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.16</version>
+  <version>0.1.18</version>
   <type>pom</type>
 </dependency>
 ```

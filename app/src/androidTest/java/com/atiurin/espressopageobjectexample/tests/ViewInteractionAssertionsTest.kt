@@ -343,7 +343,7 @@ class ViewInteractionAssertionsTest : UiElementsTest() {
 
     @Test
     fun appCompatTextView_assertText() {
-        page.appCompatTextView.hasText("Default AppCompatTextView")
+        page.appCompatTextView.hasText(getResourceString(R.string.app_compat_text))
     }
 
     // hasDrawable
