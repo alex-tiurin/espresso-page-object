@@ -27,7 +27,7 @@ In case you need to make some actions or assertions on RecyclerItemChild you nee
 - create a method that returns RecyclerViewItem subclass instance.
 
 ```kotlin
-class FriendsListPage : Page {
+object FriendsListPage : Page<FriendsListPage> {
     private val friendsList = withId(R.id.recycler_friends)
 
     class FriendRecyclerItem(list: Matcher<View>, item: Matcher<View>) : RecyclerViewItem(list, item) {
@@ -62,7 +62,7 @@ Sometimes you need to get RecyclerViewItem by it's position in RecyclerView list
 In this case you need to use another constructor of RecyclerViewItem.class
 
 ```kotlin
-class ChatPage : Page {
+object ChatPage : Page<ChatPage> {
     private val messagesList = withId(R.id.messages_list)
 
     class ChatRecyclerItem : RecyclerViewItem {

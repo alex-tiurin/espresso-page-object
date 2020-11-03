@@ -74,7 +74,7 @@ RuleChain. Но делает это он совершенно не удобны�
     @SetUp(FIRST_CONDITION)
     @Test
     fun friendsItemCheck() {
-        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+        FriendsListPage.assertStatus("Janice", "Oh. My. God")
     }
 ```
 
@@ -91,7 +91,7 @@ RuleChain. Но делает это он совершенно не удобны�
     @TearDown(SECOND_CONDITION)
     @Test
     fun testWithTearDown() {
-        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+        FriendsListPage.assertStatus("Janice", "Oh. My. God")
     }
 ```
 Порядок выполнения лямбда-выражений зависит от порядка их добавления к

@@ -57,7 +57,7 @@ In case you would like to add lambda for specific test:
     @SetUp(FIRST_CONDITION)
     @Test
     fun friendsItemCheck() {
-        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+        FriendsListPage.assertStatus("Janice", "Oh. My. God")
     }
 ```
 
@@ -73,7 +73,7 @@ been finished.
     @TearDown(SECOND_CONDITION)
     @Test
     fun testWithTearDown() {
-        FriendsListPage().assertStatus("Janice", "Oh. My. God")
+        FriendsListPage.assertStatus("Janice", "Oh. My. God")
     }
 ```
 

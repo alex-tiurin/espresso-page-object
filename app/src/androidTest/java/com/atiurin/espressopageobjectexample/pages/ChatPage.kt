@@ -10,14 +10,16 @@ import com.atiurin.espressopageobject.extensions.click
 import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
 import com.atiurin.espressopageobject.extensions.typeText
+import com.atiurin.espressopageobject.page.Page
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
 import com.atiurin.espressopageobject.recyclerview.withRecyclerView
+import com.atiurin.espressopageobjectexample.framework.utils.EspressoUtil
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert
 
-class ChatPage : Page {
-    override fun assertPageDisplayed() = apply {
+object ChatPage : Page<ChatPage>() {
+    fun assertPageDisplayed() = apply {
         step("Assert friends list page displayed") {
             messagesList.isDisplayed()
         }
@@ -71,7 +73,7 @@ class ChatPage : Page {
 
     fun clearHistory() = apply {
         step("Clear chat history") {
-            openOptionsMenu()
+            EspressoUtil.openOptionsMenu()
             clearHistoryBtn.click()
             Assert.assertEquals(0, withRecyclerView(messagesList).getSize())
         }

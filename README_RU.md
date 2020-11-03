@@ -68,7 +68,7 @@ withRecyclerView(withId(R.id.recycler_friends))
 1. Создайте PageObject class и определите `Matcher<View>` UI элементов экрана в нем
 
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     private val messagesList = withId(R.id.messages_list)
     private val clearHistoryBtn = withText("Clear history")
     private val inputMessageText = withId(R.id.message_input_text)
@@ -78,17 +78,19 @@ class ChatPage {
 Некоторые элементы, такие как заголовки открытого чата, могут вычисляться динамически, в зависимости от данных приложения.
 Тогда для их определния в класс PageObject необходимо добавить метод, возвращающий объект `Matcher<View>`
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     private fun getTitle(title: String): Matcher<View> {
         return allOf(withId(R.id.toolbar_title), withText(title))
     }
 }
 ```
+Рекомендуется сделать все классы PageObject синглтонами и потомками абстрактного класса Page.
+В этом случае вы сможете использовать магию котлина.
 
 2. Добавьте методы действий пользоватя в класс PageObject
 
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     fun sendMessage(text: String) = apply {
         inputMessageText.typeText(text)
         sendMessageBtn.click()
@@ -118,8 +120,10 @@ class ChatPage {
     @Test
     fun sendMessage(){
         FriendsListPage().openChat("Janice")
-        ChatPage().clearHistory()
-                  .sendMessage("test message")
+        ChatPage {
+            clearHistory()
+            sendMessage("test message")
+        }
     }
 ```
 
@@ -139,7 +143,7 @@ repositories {
 }
 
 dependencies {
-    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.18'
+    androidTestImplementation 'com.atiurin.espresso:espressopageobject:0.1.19'
 }
 ```
 Maven
@@ -147,7 +151,7 @@ Maven
 <dependency>
   <groupId>com.atiurin.espresso</groupId>
   <artifactId>espressopageobject</artifactId>
-  <version>0.1.18</version>
+  <version>0.1.19</version>
   <type>pom</type>
 </dependency>
 ```

@@ -4,7 +4,7 @@
 
 ```kotlin
 
-class SomePage{
+object SomePage : Page<SomePage>{
     val adapterElement = onData(withText(R.id.textId))
 }
 ```
