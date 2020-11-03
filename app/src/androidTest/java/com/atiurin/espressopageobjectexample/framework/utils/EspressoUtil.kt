@@ -1,11 +1,9 @@
-package com.atiurin.espressopageobjectexample.framework
+package com.atiurin.espressopageobjectexample.framework.utils
 
 import androidx.test.espresso.Espresso
 import androidx.test.platform.app.InstrumentationRegistry
 
-interface Page{
-    fun assertPageDisplayed() : Page
-
+object EspressoUtil {
     fun openOptionsMenu() = apply {
         Espresso.openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().context)
     }

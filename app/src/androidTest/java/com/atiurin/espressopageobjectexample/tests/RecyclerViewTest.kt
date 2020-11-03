@@ -17,7 +17,7 @@ class RecyclerViewTest : BaseTest() {
     init {
         ruleSequence.addLast(ActivityTestRule(MainActivity::class.java))
     }
-    val page = FriendsListPage()
+    val page = FriendsListPage
 
     @Test
     fun testDisplayedItemPositions() {

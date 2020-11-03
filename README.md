@@ -86,10 +86,10 @@ I try to advocate the correct construction of the test framework architecture, t
 
 Therefore, I would like to recommend the following approach when your are using the library.
 
-1. Create a PageObject class and specify screen UI elements `Matcher<View>`
+1. Create a PageObject class and specify screen UI elements `Matcher<View>`.
 
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     private val messagesList = withId(R.id.messages_list)
     private val clearHistoryBtn = withText("Clear history")
     private val inputMessageText = withId(R.id.message_input_text)
@@ -100,17 +100,20 @@ Some elements like chat title could be determined dynamically with application d
 In this case you need to add a method in PageObject class which will return `Matcher<View>` object.
 
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     private fun getTitle(title: String): Matcher<View> {
         return allOf(withId(R.id.toolbar_title), withText(title))
     }
 }
 ```
 
+It's recommended to make all PageObject classes as `object` and descendants of Page class.
+In this case you will be able to use cool kotlin magic.
+
 2. Describe user step methods in PageObject class.
 
 ```kotlin
-class ChatPage {
+object ChatPage : Page<ChatPage>() {
     fun sendMessage(text: String) = apply {
         inputMessageText.typeText(text)
         sendMessageBtn.click()
@@ -139,9 +142,11 @@ Full code sample [ChatPage.class](https://github.com/alex-tiurin/espresso-page-o
     }
     @Test
     fun sendMessage(){
-        FriendsListPage().openChat("Janice")
-        ChatPage().clearHistory()
-            .sendMessage("test message")
+        FriendsListPage.openChat("Janice")
+        ChatPage {
+            clearHistory()
+            sendMessage("test message")
+        }
     }
 ```
 

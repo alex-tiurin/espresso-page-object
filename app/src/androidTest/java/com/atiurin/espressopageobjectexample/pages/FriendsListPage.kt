@@ -4,19 +4,19 @@ import android.view.View
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.atiurin.espressopageobject.extensions.hasText
 import com.atiurin.espressopageobject.extensions.isDisplayed
+import com.atiurin.espressopageobject.page.Page
 import com.atiurin.espressopageobject.recyclerview.RecyclerViewItem
 import com.atiurin.espressopageobject.recyclerview.withRecyclerView
 import com.atiurin.espressopageobjectexample.R
-import com.atiurin.espressopageobjectexample.framework.Page
 import com.atiurin.espressopageobjectexample.framework.step
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert
 
-class FriendsListPage : Page {
-    val friendsRecycler = withId(R.id.recycler_friends)//withTagValue(`is`(Tags.CONTACTS_LIST)))
+object FriendsListPage : Page<FriendsListPage>() {
+    val friendsRecycler = withId(R.id.recycler_friends)
 
-    override fun assertPageDisplayed() = apply {
+    fun assertPageDisplayed() = apply {
         step("Assert friends list page displayed") {
             friendsRecycler.isDisplayed()
         }
@@ -38,7 +38,7 @@ class FriendsListPage : Page {
     fun openChat(name: String) = apply {
         step("Open chat with friend '$name'") {
             this.getFriendsListItem(name).click()
-            ChatPage().assertPageDisplayed()
+            ChatPage { assertPageDisplayed() }
         }
     }
 
@@ -54,7 +54,7 @@ class FriendsListPage : Page {
         }
     }
 
-    fun assertFriendsListSize(size: Int){
+    fun assertFriendsListSize(size: Int) {
         Assert.assertEquals(size, withRecyclerView(friendsRecycler).getSize())
     }
 }

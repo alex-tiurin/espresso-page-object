@@ -26,7 +26,7 @@ fun someUserAction(): SomePage = apply{
 Если необходимо работать с дочерними элементами списка, то создаем наследника RecyclerViewItem и описываем дочерние элементы:
 
 ```kotlin
-class FriendsListPage : Page {
+object FriendsListPage : Page<FriendsListPage> {
     val friendsList = withId(R.id.recycler_friends)
 
     class FriendRecyclerItem(list: Matcher<View>, item: Matcher<View>) : RecyclerViewItem(list, item) {
@@ -59,7 +59,7 @@ val name = getChildMatcher(withId(R.id.tv_name))
 Для этого необходимо использовать другой конструктор класса RecyclerViewItem.
 
 ```kotlin
-class ChatPage : Page {
+object ChatPage : Page<ChatPage> {
     private val messagesList = withId(R.id.messages_list)
 
     class ChatRecyclerItem : RecyclerViewItem {

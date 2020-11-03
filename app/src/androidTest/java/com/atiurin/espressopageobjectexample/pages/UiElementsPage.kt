@@ -1,9 +1,10 @@
 package com.atiurin.espressopageobjectexample.pages
 
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.atiurin.espressopageobject.page.Page
 import com.atiurin.espressopageobjectexample.R
 
-class UiElementsPage {
+object UiElementsPage : Page<UiElementsPage>() {
     val button = withId(R.id.button1)
     val eventStatus = withId(R.id.last_event_status)
     val radioVisibleButton = withId(R.id.radio_visible)

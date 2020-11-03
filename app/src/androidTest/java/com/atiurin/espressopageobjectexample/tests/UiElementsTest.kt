@@ -11,5 +11,5 @@ abstract class UiElementsTest : BaseTest() {
         ruleSequence.add(activityRule)
     }
 
-    val page = UiElementsPage()
+    val page = UiElementsPage
 }

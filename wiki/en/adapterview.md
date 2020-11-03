@@ -4,7 +4,7 @@ In case you need to interact with AdapterView and use standard Espresso `onData(
 
 ```kotlin
 
-class SomePage{
+object SomePage : Page<SomePage>{
     val adapterElement = onData(withText(R.id.textId))
 }
 ```
